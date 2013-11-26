@@ -55,7 +55,7 @@ public class BooksDAO implements IBooksDAO {
         List<Book> booksThatAreTaken = Lists.transform(this.lentBooks, new Function<BookLend, Book>() {
             @Override
             public Book apply(@Nullable BookLend bookLend) {
-                return BooksDAO.this.getBook(bookLend.getBookId()) ;
+                return BooksDAO.this.getBookById(bookLend.getBookId()) ;
             }
         }) ;
 
@@ -71,7 +71,7 @@ public class BooksDAO implements IBooksDAO {
         List<Book> result = new LinkedList<Book>() ;
         for(BookLend bl : this.lentBooks) {
             if(bl.getPersonId().equals(personId)) {
-                Book b = this.getBook(bl.getBookId()) ;
+                Book b = this.getBookById(bl.getBookId()) ;
                 result.add(b) ;
             }
         }
@@ -102,7 +102,7 @@ public class BooksDAO implements IBooksDAO {
     @Override
     public void removeBook(BookId bookId) {
         if(bookId != null && !this.isBookLent(bookId)) {
-            Book bookToRemove = this.getBook(bookId) ;
+            Book bookToRemove = this.getBookById(bookId) ;
             this.books.remove(bookToRemove) ;
         }
     }
@@ -123,7 +123,7 @@ public class BooksDAO implements IBooksDAO {
         return false;
     }
 
-    private Book getBook(BookId bookId) {
+    public Book getBookById(BookId bookId) {
         Book result = null ;
         if(bookId != null) {
             for(Book b : this.books) {

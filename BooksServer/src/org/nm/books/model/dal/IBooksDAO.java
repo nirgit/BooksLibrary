@@ -46,4 +46,6 @@ public interface IBooksDAO {
     void addBook(Book book) ;
 
     void removeBook(BookId book) ;
+
+    Book getBookById(BookId bookId);
 }

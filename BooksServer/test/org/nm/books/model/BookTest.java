@@ -16,7 +16,7 @@ import org.junit.runners.JUnit4;
 @RunWith(JUnit4.class)
 public class BookTest {
 
-    private final String BOOK_ID    = "id-123" ;
+    private final BookId BOOK_ID    = new BookId("id-123") ;
     private final String BOOK_NAME  = "Javascript - The good parts" ;
     private final String BOOK_AUTH  = "Douglas Crockford" ;
     private final int BOOK_YEAR     = 2008 ;
@@ -25,6 +25,7 @@ public class BookTest {
 
     @Before
     public void setUp() throws Exception {
+        PersonId owner = new PersonId(123);
         this.book = new Book(BOOK_ID, BOOK_NAME, BOOK_AUTH , BOOK_YEAR, owner) ;
     }
 
@@ -35,8 +36,8 @@ public class BookTest {
 
     @Test
     public void testGetId() {
-        String bookId = this.book.getId();
-        Assert.assertEquals(BOOK_ID, bookId);
+        BookId bookId = this.book.getId();
+        Assert.assertEquals(BOOK_ID, bookId.getId());
     }
 
 }
