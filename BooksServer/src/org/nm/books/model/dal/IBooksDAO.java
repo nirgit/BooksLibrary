@@ -26,12 +26,6 @@ public interface IBooksDAO {
     List<Book> getAllAvailableBooks() ;
 
     /**
-     * @param personId a person ID
-     * @return a list of the books taken by the given person's ID.
-     */
-    List<Book> getAllBooksTakenByPerson(PersonId personId) ;
-
-    /**
      * Lend a book from the library.
      * @param lend
      */
@@ -48,4 +42,6 @@ public interface IBooksDAO {
     void removeBook(BookId book) ;
 
     Book getBookById(BookId bookId);
+
+    List<BookLend> getLentBooks();
 }

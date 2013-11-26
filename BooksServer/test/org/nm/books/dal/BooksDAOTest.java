@@ -40,11 +40,6 @@ public class BooksDAOTest {
     }
 
     @Test
-    public void testGetAllBooksTakenByPerson() throws Exception {
-        // TODO NMO 11/26/13 - finish the tests
-    }
-
-    @Test
     public void testLendABook() throws Exception {
         // TODO NMO 11/26/13 - finish the tests
     }

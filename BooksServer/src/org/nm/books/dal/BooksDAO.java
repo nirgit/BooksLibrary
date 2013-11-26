@@ -64,21 +64,6 @@ public class BooksDAO implements IBooksDAO {
     }
 
     @Override
-    public List<Book> getAllBooksTakenByPerson(PersonId personId) {
-        if(personId == null){
-            return Collections.emptyList() ;
-        }
-        List<Book> result = new LinkedList<Book>() ;
-        for(BookLend bl : this.lentBooks) {
-            if(bl.getPersonId().equals(personId)) {
-                Book b = this.getBookById(bl.getBookId()) ;
-                result.add(b) ;
-            }
-        }
-        return result;
-    }
-
-    @Override
     public void lendABook(BookLend lend) {
         this.lentBooks.add(lend) ;
     }
@@ -136,4 +121,11 @@ public class BooksDAO implements IBooksDAO {
         return result ;
     }
 
+    /**
+     * @see org.nm.books.model.dal.IBooksDAO#getLentBooks()
+     */
+    @Override
+    public List<BookLend> getLentBooks() {
+        return this.lentBooks ;
+    }
 }

@@ -43,7 +43,15 @@ public interface IBooksLogic {
      */
     void returnBook(BookLend lend) ;
 
+    /**
+     * Add a book to the book collection.
+     * @param book a book to add to the library.
+     */
     void addBook(Book book) ;
 
+    /**
+     * Removes a book from the book collection.
+     * @param book a book to remove from the library.
+     */
     void removeBook(BookId book) ;
 }
