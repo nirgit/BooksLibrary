@@ -2,16 +2,12 @@ package org.nm.books.dal;
 
 import com.google.common.base.Function;
 import com.google.common.collect.Lists;
-import com.sun.istack.internal.Nullable;
 import org.nm.books.model.Book;
 import org.nm.books.model.BookId;
 import org.nm.books.model.BookLend;
-import org.nm.books.model.PersonId;
 import org.nm.books.model.dal.IBooksDAO;
 
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -54,7 +50,7 @@ public class BooksDAO implements IBooksDAO {
         List<Book> availableBooks = new ArrayList<Book>(this.books) ;
         List<Book> booksThatAreTaken = Lists.transform(this.lentBooks, new Function<BookLend, Book>() {
             @Override
-            public Book apply(@Nullable BookLend bookLend) {
+            public Book apply(BookLend bookLend) {
                 return BooksDAO.this.getBookById(bookLend.getBookId()) ;
             }
         }) ;
