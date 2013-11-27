@@ -13,6 +13,9 @@ sourceSets {
     }
 }
 
+// Set the resources directory to contain the web-app's resources. Brilliant!
+project.webAppDirName = 'resources'
+
 repositories {
     mavenCentral()
 }

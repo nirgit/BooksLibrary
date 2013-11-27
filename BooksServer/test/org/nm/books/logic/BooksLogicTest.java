@@ -84,7 +84,16 @@ public class BooksLogicTest {
 
     @Test
     public void testAddBook() throws Exception {
+        int numberOfBooks = this.logic.getAllBooks().size() ;
+        this.logic.addBook(null);
+        int numberOfBooksAfterAdd = this.logic.getAllBooks().size() ;
+        Assert.assertEquals(numberOfBooks, numberOfBooksAfterAdd);
 
+        Book newBook = new Book(new BookId("newBook-ID"), "Some new book", "some author", 2013, new PersonId(22)) ;
+        this.logic.addBook(newBook);
+        numberOfBooksAfterAdd = this.logic.getAllBooks().size() ;
+        Assert.assertEquals(numberOfBooks + 1, numberOfBooksAfterAdd);
+        this.logic.getAllBooks().contains(newBook) ;
     }
 
     @Test
