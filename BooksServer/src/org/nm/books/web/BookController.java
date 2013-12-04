@@ -1,8 +1,10 @@
 package org.nm.books.web;
 
 import org.nm.books.model.Book;
-import org.nm.books.model.BookId;
-import org.nm.books.model.PersonId;
+import org.nm.books.model.logic.IBooksLogic;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -18,6 +20,11 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @Controller
 public class BookController {
 
+    private final static Logger LOG = LoggerFactory.getLogger(BookController.class) ;
+
+    @Autowired
+    IBooksLogic booksLogic ;
+
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public String sayHello() {
         return "/home" ;
@@ -27,6 +34,8 @@ public class BookController {
     @RequestMapping("/book")
     public @ResponseBody Book getBook(
             @RequestParam(value="name", required=false, defaultValue="World") String name) {
-        return new Book(new BookId("111"), "Spring REST JSON", "Nir", 2013, new PersonId(23)) ;
+        Book b = booksLogic.getBookByName(name) ;
+        LOG.info("The book that was found which was matching the name is:\t" + (b != null ? b.toString() : "NULL.")) ;
+        return b ;
     }
 }

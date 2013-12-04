@@ -8,6 +8,8 @@ import org.nm.books.model.dal.IBooksDAO;
 import org.nm.books.model.logic.IBooksLogic;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import java.util.Collections;
 import java.util.LinkedList;
@@ -19,11 +21,18 @@ import java.util.List;
  * Time: 10:03 PM
  * Description:
  */
+@Component("booksLogic")
 public class BooksLogic implements IBooksLogic {
 
     private final static Logger LOG = LoggerFactory.getLogger(BooksLogic.class) ;
 
-    private final IBooksDAO dao ;
+    @Autowired
+    private IBooksDAO dao ;
+
+    /**
+     * C'tor
+     */
+    public BooksLogic() {}
 
     /**
      * C'tor
@@ -98,5 +107,22 @@ public class BooksLogic implements IBooksLogic {
         } else {
             LOG.error("Book to REMOVE to the Library cannot be NULL") ;
         }
+    }
+
+    @Override
+    public Book getBookByName(String name) {
+        if(name == null) {
+            LOG.error("Book name is NULL. returning NULL.");
+            return null ;
+        }
+        List<Book> books = getAllBooks();
+        Book result = null ;
+        for(Book b : books) {
+            if(b.getName().equals(name)) {
+                result = b ;
+                break ;
+            }
+        }
+        return result ;
     }
 }

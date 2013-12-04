@@ -54,4 +54,6 @@ public interface IBooksLogic {
      * @param book a book to remove from the library.
      */
     void removeBook(BookId book) ;
+
+    Book getBookByName(String name);
 }

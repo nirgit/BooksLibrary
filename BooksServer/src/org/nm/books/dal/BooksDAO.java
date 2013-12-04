@@ -6,6 +6,7 @@ import org.nm.books.model.Book;
 import org.nm.books.model.BookId;
 import org.nm.books.model.BookLend;
 import org.nm.books.model.dal.IBooksDAO;
+import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,6 +17,7 @@ import java.util.List;
  * Time: 12:43 PM
  * Description: a DAO for books.
  */
+@Component("booksDao")
 public class BooksDAO implements IBooksDAO {
 
     // TODO NMO 11/26/13 - this is just a mock list of books to be used until connection to DB is made.
@@ -27,7 +29,7 @@ public class BooksDAO implements IBooksDAO {
      * C'tor
      */
     public BooksDAO() {
-        this.books      = new ArrayList<Book>() ;
+        this.books      = MockDataSource.getAllBooks() ;
         this.lentBooks  = new ArrayList<BookLend>() ;
     }
 
