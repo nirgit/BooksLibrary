@@ -2,10 +2,13 @@ package org.nm.books.dal;
 
 import com.google.common.base.Function;
 import com.google.common.collect.Lists;
+import org.nm.books.config.WebConfig;
 import org.nm.books.model.Book;
 import org.nm.books.model.BookId;
 import org.nm.books.model.BookLend;
 import org.nm.books.model.dal.IBooksDAO;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+import org.springframework.context.support.AbstractApplicationContext;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
@@ -25,12 +28,18 @@ public class BooksDAO implements IBooksDAO {
 
     private final ArrayList<BookLend> lentBooks ;
 
+//    AbstractApplicationContext context = new AnnotationConfigApplicationContext(WebConfig.class);
+//    BooksDAOAdapter daoAdapter = context.getBean(BooksDAOAdapter.class);
+
+//    @Resource(name = "booksDAOAdapter")
+//    BooksDAOAdapter daoAdapter ;
+
     /**
      * C'tor
      */
     public BooksDAO() {
         this.books      = MockDataSource.getAllBooks() ;
-        this.lentBooks  = new ArrayList<BookLend>() ;
+        this.lentBooks  = new ArrayList<>() ;
     }
 
     /**
@@ -39,7 +48,7 @@ public class BooksDAO implements IBooksDAO {
      */
     public BooksDAO(List<Book> books) {
         this.books      = books;
-        this.lentBooks  = new ArrayList<BookLend>() ;
+        this.lentBooks  = new ArrayList<>() ;
     }
 
     @Override

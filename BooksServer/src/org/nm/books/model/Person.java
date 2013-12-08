@@ -1,13 +1,18 @@
 package org.nm.books.model;
 
+import javax.persistence.Entity;
+import javax.persistence.Id;
+
 /**
  * User: Nir Moav
  * Date: 11/26/13
  * Time: 12:36 PM
  * Description:
  */
+@Entity
 public class Person {
 
+    @Id
     private final PersonId id ;
     private final String name ;
     private final String email ;

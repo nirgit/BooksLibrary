@@ -1,14 +1,25 @@
 package org.nm.books.model;
 
+import javax.persistence.*;
 
+@Entity
 public class Book {
 
-    private final BookId id ;
-    private final String name ;
-    private final String author ;
-    private final int year ;
+    @EmbeddedId
+    private BookId id ;
 
-    private final PersonId owner ;
+    private String name ;
+    private String author ;
+    private int year ;
+
+    @ManyToOne
+    @JoinColumn(referencedColumnName = "id")
+    private Person owner ;
+
+    /**
+     * Default C'tor
+     */
+    public Book() {}
 
     /**
      * C'tor
@@ -18,7 +29,7 @@ public class Book {
      * @param year the issue year.
      * @param owner the owner of the book
      */
-    public Book(BookId id, String name, String author, int year, PersonId owner) {
+    public Book(BookId id, String name, String author, int year, Person owner) {
         this.id     = id;
         this.name   = name;
         this.author = author;
@@ -42,7 +53,7 @@ public class Book {
         return year;
     }
 
-    public PersonId getOwner() {
+    public Person getOwner() {
         return owner;
     }
 
@@ -54,21 +65,21 @@ public class Book {
         Book book = (Book) o;
 
         if (year != book.year) return false;
-        if (!author.equals(book.author)) return false;
-        if (!id.equals(book.id)) return false;
-        if (!name.equals(book.name)) return false;
-        if (!owner.equals(book.owner)) return false;
+        if (author != null ? !author.equals(book.author) : book.author != null) return false;
+        if (id != null ? !id.equals(book.id) : book.id != null) return false;
+        if (name != null ? !name.equals(book.name) : book.name != null) return false;
+        if (owner != null ? !owner.equals(book.owner) : book.owner != null) return false;
 
         return true;
     }
 
     @Override
     public int hashCode() {
-        int result = id.hashCode();
-        result = 31 * result + name.hashCode();
-        result = 31 * result + author.hashCode();
+        int result = id != null ? id.hashCode() : 0;
+        result = 31 * result + (name != null ? name.hashCode() : 0);
+        result = 31 * result + (author != null ? author.hashCode() : 0);
         result = 31 * result + year;
-        result = 31 * result + owner.hashCode();
+        result = 31 * result + (owner != null ? owner.hashCode() : 0);
         return result;
     }
 

@@ -2,8 +2,8 @@ package org.nm.books.dal;
 
 import org.nm.books.model.Book;
 import org.nm.books.model.BookId;
+import org.nm.books.model.Person;
 import org.nm.books.model.PersonId;
-import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,7 +26,7 @@ public class MockDataSource {
         List<Book> books = new ArrayList<Book>() ;
         int id = 1 ;
         for(String bookName : bookNames) {
-            books.add(new Book(new BookId(""+id), bookName, "Nir", 2013, new PersonId(id*33-7))) ;
+            books.add(new Book(new BookId(""+id), bookName, "Nir", 2013, new Person(new PersonId(id*33-7), "name"+id, "email"))) ;
         }
         MockDataSource.bookList = books ;
     }

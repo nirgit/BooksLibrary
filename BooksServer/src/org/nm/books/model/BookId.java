@@ -1,12 +1,16 @@
 package org.nm.books.model;
 
+import javax.persistence.Embeddable;
+import java.io.Serializable;
+
 /**
  * User: Nir Moav
  * Date: 11/26/13
  * Time: 12:38 PM
  * Description:
  */
-public class BookId {
+@Embeddable
+public class BookId implements Serializable {
 
     private String id ;
 

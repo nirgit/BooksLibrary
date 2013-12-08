@@ -3,7 +3,6 @@ package org.nm.books.model.dal;
 import org.nm.books.model.Book;
 import org.nm.books.model.BookId;
 import org.nm.books.model.BookLend;
-import org.nm.books.model.PersonId;
 
 import java.util.List;
 
