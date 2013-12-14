@@ -1,5 +1,7 @@
 <configuration>
 
+    <property name="logDir" value="${catalina.home}/logs/" />
+
     <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
         <!-- encoders are assigned the type
              ch.qos.logback.classic.encoder.PatternLayoutEncoder by default -->
@@ -12,7 +14,7 @@
         <file>book-library.log</file>
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
             <!-- daily rollover -->
-            <fileNamePattern>${catalina.home}/logs/book-library.%d{yyyy-MM-dd}.log</fileNamePattern>
+            <fileNamePattern>${logDir}/book-library.%d{yyyy-MM-dd}.log</fileNamePattern>
 
             <!-- keep 30 days' worth of history -->
             <maxHistory>10</maxHistory>

@@ -123,6 +123,9 @@ public class BooksLogic implements IBooksLogic {
                 break ;
             }
         }
+        if(result == null) {
+            result = Book.EMPTY ;
+        }
         return result ;
     }
 }

@@ -1,0 +1,19 @@
+<html>
+<head>
+    <title>Home of book library</title>
+    <script src="lib/jquery-2.0.3.min.js"></script>
+</head>
+<body>
+    <h1>Home of the brave</h1>
+
+    <div id="results"></div>
+
+    <script>
+        $.get("../api/book/Camera", function(bookData) {
+            console.log(bookData) ;
+            $("#results").text(JSON.stringify(bookData)) ;
+        }) ;
+    </script>
+
+</body>
+</html>

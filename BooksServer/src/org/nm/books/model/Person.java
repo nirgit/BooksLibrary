@@ -2,6 +2,7 @@ package org.nm.books.model;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import java.io.Serializable;
 
 /**
  * User: Nir Moav
@@ -10,7 +11,7 @@ import javax.persistence.Id;
  * Description:
  */
 @Entity
-public class Person {
+public class Person implements Serializable {
 
     @Id
     private final PersonId id ;

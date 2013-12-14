@@ -1,9 +1,12 @@
 package org.nm.books.model;
 
 import javax.persistence.*;
+import java.io.Serializable;
 
 @Entity
-public class Book {
+public class Book implements Serializable {
+
+    public static final Book EMPTY = new Book(new BookId("NO_ID"), "No book", "No author", -1, null);
 
     @EmbeddedId
     private BookId id ;
