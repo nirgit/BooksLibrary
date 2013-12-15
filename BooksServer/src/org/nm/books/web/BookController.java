@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.util.List;
+
 /**
  * User: Nir Moav
  * Date: 11/29/13
@@ -25,12 +27,22 @@ public class BookController {
     @Autowired
     IBooksLogic booksLogic ;
 
+    @RequestMapping(value = "/book/getAllBooks", method = RequestMethod.GET)
+    public @ResponseBody Book[] getAllBooks() {
+        LOG.info("Request to get all books was made.") ;
+        List<Book> books = booksLogic.getAllBooks();
+        if(books == null) {
+            return new Book[0] ;
+        } else {
+            return books.toArray(new Book[books.size()]) ;
+        }
+    }
+
     // return the json!
     @RequestMapping(value = "/book/{name}", method=RequestMethod.GET)
     public @ResponseBody Book getBook(@PathVariable String name) {
         Book b = booksLogic.getBookByName(name) ;
         LOG.info("The book that was found which was matching the name is:\t" + (b != null ? b.toString() : "NULL.")) ;
-
         return b ;
     }
 }
