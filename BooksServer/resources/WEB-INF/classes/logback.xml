@@ -11,22 +11,24 @@
     </appender>
 
     <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
-        <file>book-library.log</file>
+        <file>${logDir}/book-library.log</file>
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
             <!-- daily rollover -->
-            <fileNamePattern>${logDir}/book-library.%d{yyyy-MM-dd}.log</fileNamePattern>
+            <fileNamePattern>book-library.%d{yyyy-MM-dd}.log</fileNamePattern>
 
             <!-- keep 30 days' worth of history -->
             <maxHistory>10</maxHistory>
         </rollingPolicy>
 
         <encoder>
-            <pattern>%-4relative [%thread] %-5level %logger{35} - %msg%n</pattern>
+            <pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{35} - %msg%n</pattern>
         </encoder>
     </appender>
 
-    <root level="debug">
-        <!--<appender-ref ref="STDOUT" />-->
+    <logger name="org.nm.books" level="INFO" />
+
+    <root level="ERROR">
+        <appender-ref ref="STDOUT" />
         <appender-ref ref="FILE" />
     </root>
 </configuration>
