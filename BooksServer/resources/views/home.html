@@ -1,10 +1,19 @@
 <html>
 <head>
-    <title>Home of book library</title>
+    <title>Book library</title>
     <script src="lib/jquery-2.0.3.min.js"></script>
+    <script src="js/bookClient.js"></script>
 </head>
 <body>
-    <h1>Home of the brave</h1>
+    <div>
+        <h1>List of all available books</h1>
+        <div id="allBooks">
+            <ul id="availableBooksList">
+
+            </ul>
+        </div>
+    </div>
+
 
     <div id="results"></div>
 
@@ -15,5 +24,9 @@
         }) ;
     </script>
 
+
+    <script>
+        getAllBooks() ;
+    </script>
 </body>
 </html>
