@@ -14,9 +14,12 @@ import java.io.Serializable;
 public class Person implements Serializable {
 
     @Id
-    private final PersonId id ;
-    private final String name ;
-    private final String email ;
+    private PersonId id ;
+    private String name ;
+    private String email ;
+
+    public Person() {
+    }
 
     /**
      * C'tor

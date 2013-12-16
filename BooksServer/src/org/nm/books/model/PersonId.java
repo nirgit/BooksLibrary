@@ -12,7 +12,9 @@ import java.io.Serializable;
 @Embeddable
 public class PersonId implements Serializable {
 
-    private final int id ;
+    private int id ;
+
+    public PersonId() {}
 
     public PersonId(int id) {
         this.id = id;

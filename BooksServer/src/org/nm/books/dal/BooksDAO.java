@@ -2,16 +2,20 @@ package org.nm.books.dal;
 
 import com.google.common.base.Function;
 import com.google.common.collect.Lists;
-import org.nm.books.config.WebConfig;
+import org.nm.books.dal.repository.BooksRepository;
 import org.nm.books.model.Book;
 import org.nm.books.model.BookId;
 import org.nm.books.model.BookLend;
 import org.nm.books.model.dal.IBooksDAO;
-import org.springframework.context.annotation.AnnotationConfigApplicationContext;
-import org.springframework.context.support.AbstractApplicationContext;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import javax.annotation.PostConstruct;
+import javax.persistence.PostLoad;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -23,42 +27,40 @@ import java.util.List;
 @Component("booksDao")
 public class BooksDAO implements IBooksDAO {
 
-    // TODO NMO 11/26/13 - this is just a mock list of books to be used until connection to DB is made.
-    private final List<Book> books ;
+    private final static Logger LOG = LoggerFactory.getLogger(BooksDAO.class) ;
 
-    private final ArrayList<BookLend> lentBooks ;
+    private ArrayList<BookLend> lentBooks ;
 
-//    AbstractApplicationContext context = new AnnotationConfigApplicationContext(WebConfig.class);
-//    BooksDAOAdapter daoAdapter = context.getBean(BooksDAOAdapter.class);
-
-//    @Resource(name = "booksDAOAdapter")
-//    BooksDAOAdapter daoAdapter ;
+    @Autowired
+    BooksRepository booksRepository ;
 
     /**
      * C'tor
      */
     public BooksDAO() {
-        this.books      = MockDataSource.getAllBooks() ;
         this.lentBooks  = new ArrayList<>() ;
     }
 
-    /**
-     * C'tor
-     * @param books is a mock books list to init the inventory
-     */
-    public BooksDAO(List<Book> books) {
-        this.books      = books;
-        this.lentBooks  = new ArrayList<>() ;
+    @PostConstruct
+    public void init() {
+        this.addBooks(MockDataSource.getAllBooks()) ;
     }
 
     @Override
     public List<Book> getAllBooks() {
-        return this.books ;
+        LOG.info("Getting a list of all the books in the library.") ;
+        Iterable<Book> allBooks = this.booksRepository.findAll();
+        ArrayList<Book> booksList = new ArrayList<>() ;
+        for(Book b : allBooks) {
+            booksList.add(b) ;
+        }
+        LOG.info(booksList.size() + " books are in the library.") ;
+        return Collections.unmodifiableList(booksList) ;
     }
 
     @Override
     public List<Book> getAllAvailableBooks() {
-        List<Book> availableBooks = new ArrayList<Book>(this.books) ;
+        List<Book> availableBooks = this.getAllBooks() ;
         List<Book> booksThatAreTaken = Lists.transform(this.lentBooks, new Function<BookLend, Book>() {
             @Override
             public Book apply(BookLend bookLend) {
@@ -80,11 +82,19 @@ public class BooksDAO implements IBooksDAO {
         this.lentBooks.remove(lend) ;
     }
 
+    private void addBooks(List<Book> books) {
+        if(books != null) {
+            for(Book bookToAdd : books) {
+                this.addBook(bookToAdd);
+            }
+        }
+    }
 
     @Override
     public void addBook(Book book) {
-        if(book != null && !this.books.contains(book)) {
-            this.books.add(book) ;
+        if(book != null) {
+            LOG.info("Saving Book to DB:\t" + book) ;
+            this.booksRepository.save(book) ;
         }
     }
 
@@ -95,7 +105,7 @@ public class BooksDAO implements IBooksDAO {
     public void removeBook(BookId bookId) {
         if(bookId != null && !this.isBookLent(bookId)) {
             Book bookToRemove = this.getBookById(bookId) ;
-            this.books.remove(bookToRemove) ;
+            this.booksRepository.delete(bookToRemove);
         }
     }
 
@@ -116,15 +126,9 @@ public class BooksDAO implements IBooksDAO {
     }
 
     public Book getBookById(BookId bookId) {
-        Book result = null ;
-        if(bookId != null) {
-            for(Book b : this.books) {
-                if(b.getId().equals(bookId)) {
-                    result = b ;
-                    break ;
-                }
-            }
-        }
+        LOG.info("looking for book, matching ID:\t" + bookId);
+        Book result = this.booksRepository.findOne(bookId);
+        LOG.info("Book matching ID:\t" + bookId + "\t, is:\t" + result);
         return result ;
     }
 

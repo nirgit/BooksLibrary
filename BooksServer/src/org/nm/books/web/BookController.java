@@ -1,6 +1,8 @@
 package org.nm.books.web;
 
 import org.nm.books.model.Book;
+import org.nm.books.model.BookId;
+import org.nm.books.model.Person;
 import org.nm.books.model.logic.IBooksLogic;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -26,6 +28,18 @@ public class BookController {
 
     @Autowired
     IBooksLogic booksLogic ;
+
+    public String addBook(String bookName, String bookAuthor, int bookYear, String ownerName, String ownerEmail) {
+        Person owner    = new Person(null, ownerName, ownerEmail);
+        BookId bookId   = null;
+        Book newBook    = new Book(bookId, bookName, bookAuthor, bookYear, owner);
+        try{
+            booksLogic.addBook(newBook);
+            return "Book added successfully." ;
+        } catch(Exception e) {
+            return "Failed adding the book." ;
+        }
+    }
 
     @RequestMapping(value = "/book/getAllBooks", method = RequestMethod.GET)
     public @ResponseBody Book[] getAllBooks() {

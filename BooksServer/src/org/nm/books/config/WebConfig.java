@@ -25,23 +25,10 @@ import static org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseType.
  */
 @Configuration
 @EnableWebMvc
-//@EnableJpaRepositories(basePackages = {"org.nm.books"})
 @ComponentScan(basePackages = {"org.nm.books"})
 public class WebConfig extends WebMvcConfigurerAdapter {
 
-    @Bean
-    public DataSource dataSource() {
-        return new EmbeddedDatabaseBuilder().setType(H2).build();
-    }
 
-    @Bean
-    public LocalContainerEntityManagerFactoryBean entityManagerFactory(DataSource dataSource, JpaVendorAdapter jpaVendorAdapter) {
-        LocalContainerEntityManagerFactoryBean lef = new LocalContainerEntityManagerFactoryBean();
-        lef.setDataSource(dataSource);
-        lef.setJpaVendorAdapter(jpaVendorAdapter);
-        lef.setPackagesToScan("org.nm.books.model");
-        return lef;
-    }
 
     @Bean
     public JpaVendorAdapter jpaVendorAdapter() {

@@ -94,6 +94,7 @@ public class BooksLogic implements IBooksLogic {
     @Override
     public void addBook(Book book) {
         if(book != null) {
+            LOG.info("Adding book to library:\t" + book);
             this.dao.addBook(book);
         } else {
             LOG.error("Book to ADD to the Library cannot be NULL") ;

@@ -14,6 +14,8 @@ public class BookId implements Serializable {
 
     private String id ;
 
+    public BookId() {}
+
     public BookId(String id) {
         this.id = id;
     }
