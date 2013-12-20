@@ -26,7 +26,7 @@ public class MockDataSource {
         List<Book> books = new ArrayList<Book>() ;
         int id = 1 ;
         for(String bookName : bookNames) {
-            books.add(new Book(new BookId(""+id), bookName, "Nir", 2013, new Person(new PersonId(id*33-7), "name"+id, "email"))) ;
+            books.add(new Book(new BookId(""+id), bookName, "Joshua Bloch", 2013, new Person(new PersonId(123), "Nir Moav", "getnirm@gmail.com"))) ;
         }
         MockDataSource.bookList = books ;
     }

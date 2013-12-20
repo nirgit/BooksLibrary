@@ -3,17 +3,15 @@ package org.nm.books.dal;
 import com.google.common.base.Function;
 import com.google.common.collect.Lists;
 import org.nm.books.dal.repository.BooksRepository;
-import org.nm.books.model.Book;
-import org.nm.books.model.BookId;
-import org.nm.books.model.BookLend;
+import org.nm.books.model.*;
 import org.nm.books.model.dal.IBooksDAO;
+import org.nm.books.model.dal.IPersonDAO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
-import javax.persistence.PostLoad;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -34,6 +32,9 @@ public class BooksDAO implements IBooksDAO {
     @Autowired
     BooksRepository booksRepository ;
 
+    @Autowired
+    private IPersonDAO peopleDAO ;
+
     /**
      * C'tor
      */
@@ -43,6 +44,7 @@ public class BooksDAO implements IBooksDAO {
 
     @PostConstruct
     public void init() {
+        peopleDAO.addPerson(new Person(new PersonId(123), "Nir Moav", "getnirm@gmail.com"));
         this.addBooks(MockDataSource.getAllBooks()) ;
     }
 

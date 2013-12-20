@@ -1,9 +1,6 @@
 package org.nm.books.model.logic;
 
-import org.nm.books.model.Book;
-import org.nm.books.model.BookId;
-import org.nm.books.model.BookLend;
-import org.nm.books.model.PersonId;
+import org.nm.books.model.*;
 
 import java.util.List;
 
@@ -56,4 +53,6 @@ public interface IBooksLogic {
     void removeBook(BookId book) ;
 
     Book getBookByName(String name);
+
+    public Person getPersonById(PersonId personId) ;
 }

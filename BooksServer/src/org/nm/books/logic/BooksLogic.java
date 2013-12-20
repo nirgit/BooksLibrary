@@ -1,10 +1,8 @@
 package org.nm.books.logic;
 
-import org.nm.books.model.Book;
-import org.nm.books.model.BookId;
-import org.nm.books.model.BookLend;
-import org.nm.books.model.PersonId;
+import org.nm.books.model.*;
 import org.nm.books.model.dal.IBooksDAO;
+import org.nm.books.model.dal.IPersonDAO;
 import org.nm.books.model.logic.IBooksLogic;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -27,7 +25,10 @@ public class BooksLogic implements IBooksLogic {
     private final static Logger LOG = LoggerFactory.getLogger(BooksLogic.class) ;
 
     @Autowired
-    private IBooksDAO dao ;
+    private IBooksDAO booksDAO;
+
+    @Autowired
+    private IPersonDAO peopleDAO ;
 
     /**
      * C'tor
@@ -36,21 +37,25 @@ public class BooksLogic implements IBooksLogic {
 
     /**
      * C'tor
-     * @param dao the DAO
+     * @param booksDAO the DAO
      */
-    public BooksLogic(IBooksDAO dao) {
-        this.dao = dao;
+    public BooksLogic(IBooksDAO booksDAO) {
+        this.booksDAO = booksDAO;
         LOG.info("Book logic has been initialized.");
+    }
+
+    public Person getPersonById(PersonId personId) {
+        return peopleDAO.findPersonById(personId) ;
     }
 
     @Override
     public List<Book> getAllBooks() {
-        return dao.getAllBooks() ;
+        return booksDAO.getAllBooks() ;
     }
 
     @Override
     public List<Book> getAllAvailableBooks() {
-        return dao.getAllAvailableBooks() ;
+        return booksDAO.getAllAvailableBooks() ;
     }
 
     @Override
@@ -58,12 +63,12 @@ public class BooksLogic implements IBooksLogic {
         if(personId == null){
             return Collections.emptyList() ;
         }
-        List<BookLend> lentBooks = this.dao.getLentBooks() ;
+        List<BookLend> lentBooks = this.booksDAO.getLentBooks() ;
         List<Book> result = new LinkedList<Book>() ;
 
         for(BookLend bl : lentBooks) {
             if(bl.getPersonId().equals(personId)) {
-                Book b = this.dao.getBookById(bl.getBookId()) ;
+                Book b = this.booksDAO.getBookById(bl.getBookId()) ;
                 result.add(b) ;
             }
         }
@@ -73,7 +78,7 @@ public class BooksLogic implements IBooksLogic {
     @Override
     public void lendABook(BookLend bookToLend) {
         if(bookToLend != null) {
-            this.dao.lendABook(bookToLend);
+            this.booksDAO.lendABook(bookToLend);
         } else {
             LOG.error("Book to lend cannot be NULL") ;
         }
@@ -82,7 +87,7 @@ public class BooksLogic implements IBooksLogic {
     @Override
     public void returnBook(BookLend bookToReturn) {
         if(bookToReturn != null) {
-            this.dao.returnBook(bookToReturn);
+            this.booksDAO.returnBook(bookToReturn);
         } else {
             LOG.error("Book to return cannot be NULL") ;
         }
@@ -95,7 +100,7 @@ public class BooksLogic implements IBooksLogic {
     public void addBook(Book book) {
         if(book != null) {
             LOG.info("Adding book to library:\t" + book);
-            this.dao.addBook(book);
+            this.booksDAO.addBook(book);
         } else {
             LOG.error("Book to ADD to the Library cannot be NULL") ;
         }
@@ -104,7 +109,7 @@ public class BooksLogic implements IBooksLogic {
     @Override
     public void removeBook(BookId book) {
         if(book != null) {
-            this.dao.removeBook(book);
+            this.booksDAO.removeBook(book);
         } else {
             LOG.error("Book to REMOVE to the Library cannot be NULL") ;
         }

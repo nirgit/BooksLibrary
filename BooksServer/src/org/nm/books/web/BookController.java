@@ -3,6 +3,7 @@ package org.nm.books.web;
 import org.nm.books.model.Book;
 import org.nm.books.model.BookId;
 import org.nm.books.model.Person;
+import org.nm.books.model.PersonId;
 import org.nm.books.model.logic.IBooksLogic;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -30,8 +31,8 @@ public class BookController {
     IBooksLogic booksLogic ;
 
     public String addBook(String bookName, String bookAuthor, int bookYear, String ownerName, String ownerEmail) {
-        Person owner    = new Person(null, ownerName, ownerEmail);
-        BookId bookId   = null;
+        Person owner    = booksLogic.getPersonById(new PersonId(123));
+        BookId bookId   = new BookId(bookName+"-"+bookAuthor+"-"+bookYear+"-"+ownerName+"-ID");
         Book newBook    = new Book(bookId, bookName, bookAuthor, bookYear, owner);
         try{
             booksLogic.addBook(newBook);
