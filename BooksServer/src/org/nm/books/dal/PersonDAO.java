@@ -9,6 +9,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
+
 /**
  * User: Nir Moav
  * Date: 12/17/13
@@ -59,5 +61,23 @@ public class PersonDAO implements IPersonDAO {
         } else {
             LOG.error("Can't delete a person matching a null ID.");
         }
+    }
+
+    @Override
+    public Person findPersonByEmail(String email) {
+        if(email == null) {
+            LOG.error("Can't find person with a corresponding NULL email") ;
+            return null ;
+        }
+        // TODO NMO 12/21/13 - BAD implementation - replace with a good query.
+        Iterable<Person> people = peopleRepository.findAll() ;
+        Person result = null ;
+        for(Person p : people) {
+            if(email.equals(p.getEmail())) {
+                result = p ;
+                break ;
+            }
+        }
+        return result ;
     }
 }

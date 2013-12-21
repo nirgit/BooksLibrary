@@ -12,15 +12,15 @@ import java.io.Serializable;
 @Embeddable
 public class PersonId implements Serializable {
 
-    private int id ;
+    private Long id ;
 
     public PersonId() {}
 
-    public PersonId(int id) {
+    public PersonId(Long id) {
         this.id = id;
     }
 
-    public int getId() {
+    public long getId() {
         return id;
     }
 
@@ -38,7 +38,7 @@ public class PersonId implements Serializable {
 
     @Override
     public int hashCode() {
-        return id;
+        return id.hashCode();
     }
 
     @Override

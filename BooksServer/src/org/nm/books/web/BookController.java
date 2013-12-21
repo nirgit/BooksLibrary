@@ -3,8 +3,8 @@ package org.nm.books.web;
 import org.nm.books.model.Book;
 import org.nm.books.model.BookId;
 import org.nm.books.model.Person;
-import org.nm.books.model.PersonId;
 import org.nm.books.model.logic.IBooksLogic;
+import org.nm.books.model.logic.IPersonLogic;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,15 +30,25 @@ public class BookController {
     @Autowired
     IBooksLogic booksLogic ;
 
-    public String addBook(String bookName, String bookAuthor, int bookYear, String ownerName, String ownerEmail) {
-        Person owner    = booksLogic.getPersonById(new PersonId(123));
+    @Autowired
+    IPersonLogic personLogic ;
+
+    public void addBook(String bookName, String bookAuthor, int bookYear, String ownerName, String ownerEmail) {
+        Person owner    = personLogic.getPersonByEmail(ownerEmail);
+        if(owner == null) {
+            personLogic.addPerson(ownerName, ownerEmail);
+            owner = personLogic.getPersonByEmail(ownerEmail);
+            if(owner == null) {
+                LOG.error("Error while adding a book, person is NULL.") ;
+                return ;
+            }
+        }
         BookId bookId   = new BookId(bookName+"-"+bookAuthor+"-"+bookYear+"-"+ownerName+"-ID");
         Book newBook    = new Book(bookId, bookName, bookAuthor, bookYear, owner);
         try{
             booksLogic.addBook(newBook);
-            return "Book added successfully." ;
         } catch(Exception e) {
-            return "Failed adding the book." ;
+            LOG.error("Error adding a book to the DB", e) ;
         }
     }
 

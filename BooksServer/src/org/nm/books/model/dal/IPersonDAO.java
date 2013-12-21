@@ -16,4 +16,6 @@ public interface IPersonDAO {
     Person findPersonById(PersonId personId) ;
 
     void deletePerson(PersonId personId) ;
+
+    Person findPersonByEmail(String email);
 }
