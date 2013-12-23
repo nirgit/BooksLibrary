@@ -2,6 +2,8 @@ package org.nm.books.model;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
 import java.io.Serializable;
 
 /**
@@ -11,6 +13,7 @@ import java.io.Serializable;
  * Description:
  */
 @Entity
+@Inheritance(strategy= InheritanceType.TABLE_PER_CLASS)
 public class Person implements Serializable {
 
     @Id

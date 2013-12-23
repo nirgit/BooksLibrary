@@ -1,5 +1,6 @@
 package org.nm.books.model.dal;
 
+import org.nm.books.model.Owner;
 import org.nm.books.model.Person;
 import org.nm.books.model.PersonId;
 
@@ -11,11 +12,11 @@ import org.nm.books.model.PersonId;
  */
 public interface IPersonDAO {
 
-    void addPerson(Person person) ;
+    void addOwner(Owner owner) ;
 
     Person findPersonById(PersonId personId) ;
 
     void deletePerson(PersonId personId) ;
 
-    Person findPersonByEmail(String email);
+    Owner findOwnerByEmail(String email);
 }

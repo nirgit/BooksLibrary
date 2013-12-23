@@ -1,5 +1,6 @@
 package org.nm.books.model.logic;
 
+import org.nm.books.model.Owner;
 import org.nm.books.model.Person;
 import org.nm.books.model.PersonId;
 
@@ -11,9 +12,9 @@ import org.nm.books.model.PersonId;
  */
 public interface IPersonLogic {
 
-    void addPerson(String name, String email) ;
+    void addOwner(String name, String email) ;
 
     Person getPersonById(PersonId personId) ;
 
-    Person getPersonByEmail(String email) ;
+    Owner getOwnerByEmail(String email) ;
 }

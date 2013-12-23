@@ -17,7 +17,7 @@ public class Book implements Serializable {
 
     @ManyToOne
     @JoinColumn(referencedColumnName = "id")
-    private Person owner ;
+    private Owner owner ;
 
     /**
      * Default C'tor
@@ -32,7 +32,7 @@ public class Book implements Serializable {
      * @param year the issue year.
      * @param owner the owner of the book
      */
-    public Book(BookId id, String name, String author, int year, Person owner) {
+    public Book(BookId id, String name, String author, int year, Owner owner) {
         this.id     = id;
         this.name   = name;
         this.author = author;
@@ -56,7 +56,7 @@ public class Book implements Serializable {
         return year;
     }
 
-    public Person getOwner() {
+    public Owner getOwner() {
         return owner;
     }
 

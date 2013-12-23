@@ -1,6 +1,8 @@
 package org.nm.books.dal;
 
-import org.nm.books.dal.repository.PeopleRepository;
+import org.nm.books.dal.repository.BorrowerRepository;
+import org.nm.books.dal.repository.OwnerRepository;
+import org.nm.books.model.Owner;
 import org.nm.books.model.Person;
 import org.nm.books.model.PersonId;
 import org.nm.books.model.dal.IPersonDAO;
@@ -8,8 +10,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-
-import java.util.List;
 
 /**
  * User: Nir Moav
@@ -23,7 +23,10 @@ public class PersonDAO implements IPersonDAO {
     private final static Logger LOG = LoggerFactory.getLogger(PersonDAO.class) ;
 
     @Autowired
-    PeopleRepository peopleRepository;
+    BorrowerRepository borrowerRepository;
+
+    @Autowired
+    OwnerRepository ownerRepository;
 
     /**
      * C'tor
@@ -32,13 +35,13 @@ public class PersonDAO implements IPersonDAO {
     }
 
     @Override
-    public void addPerson(Person person) {
-        if(person == null) {
+    public void addOwner(Owner owner) {
+        if(owner == null) {
             LOG.error("Person to add can't be NULL.");
         } else {
-            if(this.findPersonById(person.getId()) == null) {
-                peopleRepository.save(person) ;
-                LOG.info(person.toString() + "\twas saved successfully.") ;
+            if(this.findPersonById(owner.getId()) == null) {
+                ownerRepository.save(owner) ;
+                LOG.info(owner.toString() + "\twas saved successfully.") ;
             } else {
                 LOG.info("Person already exists.") ;
             }
@@ -49,7 +52,7 @@ public class PersonDAO implements IPersonDAO {
     public Person findPersonById(PersonId personId) {
         Person result = null ;
         if(personId != null) {
-            result = peopleRepository.findOne(personId) ;
+            result = borrowerRepository.findOne(personId) ;
         }
         return result ;
     }
@@ -57,24 +60,24 @@ public class PersonDAO implements IPersonDAO {
     @Override
     public void deletePerson(PersonId personId) {
         if(personId != null) {
-            peopleRepository.delete(personId);
+            borrowerRepository.delete(personId);
         } else {
             LOG.error("Can't delete a person matching a null ID.");
         }
     }
 
     @Override
-    public Person findPersonByEmail(String email) {
+    public Owner findOwnerByEmail(String email) {
         if(email == null) {
             LOG.error("Can't find person with a corresponding NULL email") ;
             return null ;
         }
         // TODO NMO 12/21/13 - BAD implementation - replace with a good query.
-        Iterable<Person> people = peopleRepository.findAll() ;
-        Person result = null ;
-        for(Person p : people) {
-            if(email.equals(p.getEmail())) {
-                result = p ;
+        Iterable<Owner> owners = ownerRepository.findAll() ;
+        Owner result = null ;
+        for(Owner owner : owners) {
+            if(email.equals(owner.getEmail())) {
+                result = owner ;
                 break ;
             }
         }

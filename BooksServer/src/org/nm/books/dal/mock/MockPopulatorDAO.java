@@ -1,7 +1,7 @@
 package org.nm.books.dal.mock;
 
 import org.nm.books.model.Book;
-import org.nm.books.model.Person;
+import org.nm.books.model.Owner;
 import org.nm.books.model.dal.IBooksDAO;
 import org.nm.books.model.dal.IPersonDAO;
 import org.slf4j.Logger;
@@ -42,9 +42,9 @@ public class MockPopulatorDAO {
     }
 
     private void addMockPeople(MockDataSource dataSource) {
-        List<Person> bookOwners = dataSource.getAllBookOwners();
-        for(Person p : bookOwners) {
-            peopleDAO.addPerson(p);
+        List<Owner> bookOwners = dataSource.getAllBookOwners();
+        for(Owner owner : bookOwners) {
+            peopleDAO.addOwner(owner);
         }
     }
 

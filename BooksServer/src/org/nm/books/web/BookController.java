@@ -2,7 +2,7 @@ package org.nm.books.web;
 
 import org.nm.books.model.Book;
 import org.nm.books.model.BookId;
-import org.nm.books.model.Person;
+import org.nm.books.model.Owner;
 import org.nm.books.model.logic.IBooksLogic;
 import org.nm.books.model.logic.IPersonLogic;
 import org.slf4j.Logger;
@@ -34,10 +34,10 @@ public class BookController {
     IPersonLogic personLogic ;
 
     public void addBook(String bookName, String bookAuthor, int bookYear, String ownerName, String ownerEmail) {
-        Person owner    = personLogic.getPersonByEmail(ownerEmail);
+        Owner owner    = personLogic.getOwnerByEmail(ownerEmail);
         if(owner == null) {
-            personLogic.addPerson(ownerName, ownerEmail);
-            owner = personLogic.getPersonByEmail(ownerEmail);
+            personLogic.addOwner(ownerName, ownerEmail);
+            owner = personLogic.getOwnerByEmail(ownerEmail);
             if(owner == null) {
                 LOG.error("Error while adding a book, person is NULL.") ;
                 return ;

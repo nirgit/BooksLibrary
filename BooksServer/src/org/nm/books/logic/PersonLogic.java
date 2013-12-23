@@ -1,5 +1,6 @@
-package org.nm.books.web;
+package org.nm.books.logic;
 
+import org.nm.books.model.Owner;
 import org.nm.books.model.Person;
 import org.nm.books.model.PersonId;
 import org.nm.books.model.dal.IPersonDAO;
@@ -24,15 +25,15 @@ public class PersonLogic implements IPersonLogic {
     IPersonDAO dao ;
 
     @Override
-    public void addPerson(String name, String email) {
+    public void addOwner(String name, String email) {
         if(name == null || email == null) {
             LOG.error("Can't add a person with a NULL name or email.") ;
             return ;
         }
         long id = System.currentTimeMillis() ;
         PersonId personId = new PersonId(id) ;
-        Person toAdd = new Person(personId, name, email) ;
-        dao.addPerson(toAdd);
+        Owner toAdd = new Owner(personId, name, email) ;
+        dao.addOwner(toAdd);
     }
 
     @Override
@@ -45,7 +46,7 @@ public class PersonLogic implements IPersonLogic {
     }
 
     @Override
-    public Person getPersonByEmail(String email) {
-        return dao.findPersonByEmail(email);
+    public Owner getOwnerByEmail(String email) {
+        return dao.findOwnerByEmail(email);
     }
 }
