@@ -2,10 +2,7 @@ package org.nm.books.dal.mock;
 
 import org.nm.books.model.*;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
-import java.util.UUID;
+import java.util.*;
 
 /**
  * User: Nir Moav
@@ -25,7 +22,8 @@ public class MockDataSource {
     private static String[] bookNames = {
             "Javascript the good parts", "Effective Java", "Camera", "Guns, Germs & Steel",
             "Steve Jobs", "Life of Pi", "Lord Of The Rings I", "Othelo", "The Swiss Kitchen",
-            "The Hobbit", "Tom Sawyer", "Alice in Wonderland", "Dr. Doolittle"
+            "The Hobbit", "Tom Sawyer", "Alice in Wonderland", "Dr. Doolittle", "Wilhelm Tell",
+            "Foundations", "Euclide Geometry", "Advanced Calculus", "jQuery 2.0"
     } ;
 
     private List<String> authors = null ;
@@ -55,11 +53,14 @@ public class MockDataSource {
     }
 
     private void createBooks() {
+        int currentYear = Calendar.getInstance().get(Calendar.YEAR) ;
+        final int firstPublishingYear = 1880 ;
         Random r = new Random(System.currentTimeMillis()) ;
         for(String bookName : bookNames) {
-            Owner randomOwner  = owners.get(r.nextInt(owners.size()));
+            Owner randomOwner   = owners.get(r.nextInt(owners.size()));
             String authorName   = authors.get(r.nextInt(authors.size())) ;
-            this.bookList.add(new Book(new BookId(UUID.randomUUID()+"-BID"), bookName, authorName, 2013, randomOwner)) ;
+            int year            = firstPublishingYear + r.nextInt(currentYear-firstPublishingYear);
+            this.bookList.add(new Book(new BookId(UUID.randomUUID()+"-BID"), bookName, authorName, year, randomOwner)) ;
         }
     }
 

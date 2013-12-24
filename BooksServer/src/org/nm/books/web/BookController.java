@@ -3,6 +3,7 @@ package org.nm.books.web;
 import org.nm.books.model.Book;
 import org.nm.books.model.BookId;
 import org.nm.books.model.Owner;
+import org.nm.books.model.api.IBooksAPI;
 import org.nm.books.model.logic.IBooksLogic;
 import org.nm.books.model.logic.IPersonLogic;
 import org.slf4j.Logger;
@@ -23,7 +24,7 @@ import java.util.List;
  * Description:
  */
 @Controller
-public class BookController {
+public class BookController implements IBooksAPI {
 
     private final static Logger LOG = LoggerFactory.getLogger(BookController.class) ;
 
@@ -33,7 +34,27 @@ public class BookController {
     @Autowired
     IPersonLogic personLogic ;
 
-    public void addBook(String bookName, String bookAuthor, int bookYear, String ownerName, String ownerEmail) {
+    @RequestMapping(value = "/book/{name}", method=RequestMethod.GET)
+    @ResponseBody
+    public Book getBook(@PathVariable String name) {
+        Book b = booksLogic.getBookByName(name) ;
+        if(Book.EMPTY.equals(b) || b == null) {
+            LOG.info("No book found matching the name:\t" + name) ;
+            return null ;
+        } else {
+            LOG.info("The book that was found which was matching the name is:\t" + b.toString()) ;
+            return b ;
+        }
+    }
+
+    /**
+     * @see IBooksAPI#addBook
+     */
+    @Override
+    @RequestMapping(value = "/book/addBook/{bookName}/{author}/{year}/{ownerName}/{ownerEmail}", method = RequestMethod.POST)
+    public void addBook(@PathVariable("bookName") String bookName, @PathVariable("author") String bookAuthor,
+                        @PathVariable("year") int bookYear, @PathVariable("ownerName") String ownerName,
+                        @PathVariable("ownerEmail") String ownerEmail) {
         Owner owner    = personLogic.getOwnerByEmail(ownerEmail);
         if(owner == null) {
             personLogic.addOwner(ownerName, ownerEmail);
@@ -52,8 +73,20 @@ public class BookController {
         }
     }
 
+    /**
+     * @see org.nm.books.model.api.IBooksAPI#deleteBook(BookId)
+     */
+    @Override
+    @RequestMapping(value = "/book/deleteBook/{id}", method = RequestMethod.POST)
+    public void deleteBook(@PathVariable("id") BookId bookIdToDelete) {
+        // TODO NMO 12/24/13 -
+        LOG.info("Deleting a book with ID:", bookIdToDelete) ;
+    }
+
+    @Override
     @RequestMapping(value = "/book/getAllBooks", method = RequestMethod.GET)
-    public @ResponseBody Book[] getAllBooks() {
+    @ResponseBody
+    public Book[] getAllLibraryBooks() {
         LOG.info("Request to get all books was made.") ;
         List<Book> books = booksLogic.getAllBooks();
         if(books == null) {
@@ -63,11 +96,19 @@ public class BookController {
         }
     }
 
-    // return the json!
-    @RequestMapping(value = "/book/{name}", method=RequestMethod.GET)
-    public @ResponseBody Book getBook(@PathVariable String name) {
-        Book b = booksLogic.getBookByName(name) ;
-        LOG.info("The book that was found which was matching the name is:\t" + (b != null ? b.toString() : "NULL.")) ;
-        return b ;
+    @Override
+    @RequestMapping(value = "/book/getAllBorrowedBooks", method = RequestMethod.GET)
+    @ResponseBody
+    public Book[] getAllBorrowedBooks() {
+        LOG.info("Getting all borrowed books.") ;
+        return new Book[0];
+    }
+
+    @Override
+    @RequestMapping(value = "/book/getAvailableBooks", method = RequestMethod.GET)
+    @ResponseBody
+    public Book[] getAllAvailableBooks() {
+        LOG.info("Getting all available books.") ;
+        return new Book[0];
     }
 }

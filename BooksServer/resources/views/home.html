@@ -3,8 +3,16 @@
     <title>Book library</title>
     <script src="lib/jquery-2.0.3.min.js"></script>
     <script src="js/bookClient.js"></script>
+    <script>
+        function init() {
+            $("#searchButton").on('click', function() {
+                var bookName = $("#bookNameToSearch").val() ;
+                getBook(bookName) ;
+            }) ;
+        }
+    </script>
 </head>
-<body>
+<body onload="init()">
     <div>
         <h1>List of all available books</h1>
         <div id="allBooks">
@@ -14,16 +22,11 @@
         </div>
     </div>
 
+    <div id="bookSearch">
+        <input id="bookNameToSearch" type="text" placeholder="Enter a book name..." maxlength="100"/><span id="searchButton" class="button">Search!</span>
+    </div>
 
     <div id="results"></div>
-
-    <script>
-        $.get("../api/book/Camera", function(bookData) {
-            console.log(bookData) ;
-            $("#results").text(JSON.stringify(bookData)) ;
-        }) ;
-    </script>
-
 
     <script>
         getAllBooks() ;
