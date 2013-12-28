@@ -11,7 +11,7 @@ define.Class("views.View", function(def) {
         },
 
         go: function() {
-            this._render(view) ;
+            this._render(this._node) ;
         },
 
         // MUST be overriden in sub-classes.
