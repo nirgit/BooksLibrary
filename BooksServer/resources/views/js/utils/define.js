@@ -42,19 +42,24 @@ window.define = (function() {
             }
 
             // take the c'tor
-            var classCtor   = classObj.methods.init ;
+            var classCtor   = classObj.methods["init"] ;
+
             if(!classCtor) {
                 console.error("Class does not have an init method (c'tor).") ;
                 return null ;
             }
-            var className   = classFullName.split(".")[classFullName.split(".").length-1] ;
-            classCtor.name  = className ;
+            var className               = classFullName.split(".")[classFullName.split(".").length-1] ;
+            var $Class                   = (new Function("ctor", 'return function ' + className + '(){ return ctor.apply(this, arguments);}'))(classCtor) ;
+
+            var $classPrototype          = {} ;
             for(method in classObj.methods) {
                 if(method !== "init") {
-                    classCtor.prototype[method] = classObj.methods[method] ;
+                    $classPrototype[method] = classObj.methods[method] ;
                 }
             }
-            return classCtor ;
+
+            $Class.prototype = $classPrototype ;
+            return $Class ;
         }
     } ;
 
