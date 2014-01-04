@@ -9,57 +9,58 @@ window.define = (function() {
     }
 
     var methods = {
+        _isClassDefined: function(className) {
+            return !!this._classes[className] ;
+        },
+
         getClass: function(classFullName) {
             return this._classes[classFullName] ;
         },
 
-        Class: function(classFullName, classDef) {
-            if(!classFullName || !classDef) {
-                console.log("Definition of class must have a classFullName and definition.") ;
-                return ;
-            }
+
+        Class: function(classFullName, ClassDef) {
             // validation
-            if(this._isClassDefined(classDef)) {
-                return ;
-            }
+            if(!this._shouldCreateClass(classFullName, ClassDef)) ;
 
             // creation of definition
-            var classObj = {} ;
-            classDef(classObj) ;
+            var defInstance = {} ;
+            ClassDef(defInstance) ;
+            var $classProto = this._createClassPrototype(defInstance) ;
 
-            classObj = this._inheritParents(classObj) ;
-            if(!classObj) {
-                console.error("Inheritance of class failed. Failed creating class " + classFullName) ;
-                return ;
-            }
-
-            var readyClass = this._buildClass(classFullName, classObj) ;
+            var readyClass = this._buildClass(classFullName, defInstance, $classProto) ;
             if(readyClass) {
                 this._classes[classFullName] = readyClass ;
             }
         },
 
-        _isClassDefined: function(className) {
-            return !!this._classes[className] ;
+        _shouldCreateClass: function(classFullName, ClassDef) {
+            var isValid = true ;
+            if(!classFullName || !ClassDef) {
+                isValid = false ;
+                console.error("Definition of class must have a classFullName and definition.") ;
+            } else if(this._isClassDefined(ClassDef)) {
+                isValid = false ;
+                console.log("Class '%s' is already defined", classFullName) ;
+            }
+            return isValid ;
         },
 
-        _inheritParents: function(classObj) {
-            if(!classObj.extends) {
-                return classObj ;
+        _createClassPrototype: function(defInstance) {
+            if(!defInstance.extends) {
+                return null ;
             } else {
                 // validate the existence of the parent.
-                if(!this._isClassDefined(classObj.extends)) {
-                    console.error("Class " + classObj.extends + " to inherit, is not defined.") ;
+                if(!this._isClassDefined(defInstance.extends)) {
+                    console.error("Class " + defInstance.extends + " to inherit, is not defined.") ;
                     return null ;
                 }
                 // inherit the parent
-                var parentClass     = this.getClass(classObj.extends) ;
-                classObj.prototype  = new parentClass() ;
-                return classObj ;
+                var parentClass = this.getClass(defInstance.extends) ;
+                return new parentClass() ;
             }
         },
 
-        _buildClass: function(classFullName, classObj) {
+        _buildClass: function(classFullName, classObj, $classProto) {
             if(!classObj) {
                 return null ;
             }
@@ -74,20 +75,21 @@ window.define = (function() {
             var className               = classFullName.split(".")[classFullName.split(".").length-1] ;
             var $Class                  = (new Function("ctor", 'return function ' + className + '(){ return ctor.apply(this, arguments);}'))(classCtor) ;
 
-            var $classPrototype         = function (){} ;
-            // add parent prototype
-            if(classObj.prototype) {
-                $classPrototype.prototype = classObj.prototype ;
-            }
-
             // add definition methods.
+            var classPrototype = $Class.prototype ;
             for(method in classObj.methods) {
-                if(method !== "__init") {
-                    $classPrototype[method] = classObj.methods[method] ;
-                }
+                classPrototype[method] = classObj.methods[method] ;
             }
 
-            $Class.prototype = $classPrototype ;
+            classPrototype.super = function() {
+                classPrototype.prototype.__init.apply(this, arguments) ;
+            }
+
+            if($classProto) {
+                classPrototype.prototype = $classProto ;
+            }
+
+            $Class.prototype = classPrototype ;
             return $Class ;
         }
     } ;

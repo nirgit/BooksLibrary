@@ -4,7 +4,7 @@ define.Class("nir.Dog", function(def) {
 
     def.methods = {
         __init: function(name) {
-            this._name = name ;
+            this.super(name) ;
         },
 
         speak: function() {
