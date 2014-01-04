@@ -5,7 +5,7 @@
 */
 define.Class("views.View", function(def) {
     def.methods = {
-        init: function(node, args) {
+        __init: function(node, args) {
             this._node = node ;
             this._args = args ;
         },

@@ -23,9 +23,16 @@ window.define = (function() {
                 return ;
             }
 
-            // creation
+            // creation of definition
             var classObj = {} ;
             classDef(classObj) ;
+
+            classObj = this._inheritParents(classObj) ;
+            if(!classObj) {
+                console.error("Inheritance of class failed. Failed creating class " + classFullName) ;
+                return ;
+            }
+
             var readyClass = this._buildClass(classFullName, classObj) ;
             if(readyClass) {
                 this._classes[classFullName] = readyClass ;
@@ -36,24 +43,46 @@ window.define = (function() {
             return !!this._classes[className] ;
         },
 
+        _inheritParents: function(classObj) {
+            if(!classObj.extends) {
+                return classObj ;
+            } else {
+                // validate the existence of the parent.
+                if(!this._isClassDefined(classObj.extends)) {
+                    console.error("Class " + classObj.extends + " to inherit, is not defined.") ;
+                    return null ;
+                }
+                // inherit the parent
+                var parentClass     = this.getClass(classObj.extends) ;
+                classObj.prototype  = new parentClass() ;
+                return classObj ;
+            }
+        },
+
         _buildClass: function(classFullName, classObj) {
             if(!classObj) {
                 return null ;
             }
 
             // take the c'tor
-            var classCtor   = classObj.methods["init"] ;
+            var classCtor   = classObj.methods["__init"] ;
 
             if(!classCtor) {
-                console.error("Class does not have an init method (c'tor).") ;
+                console.error("Class does not have an '__init' method (c'tor).") ;
                 return null ;
             }
             var className               = classFullName.split(".")[classFullName.split(".").length-1] ;
-            var $Class                   = (new Function("ctor", 'return function ' + className + '(){ return ctor.apply(this, arguments);}'))(classCtor) ;
+            var $Class                  = (new Function("ctor", 'return function ' + className + '(){ return ctor.apply(this, arguments);}'))(classCtor) ;
 
-            var $classPrototype          = {} ;
+            var $classPrototype         = function (){} ;
+            // add parent prototype
+            if(classObj.prototype) {
+                $classPrototype.prototype = classObj.prototype ;
+            }
+
+            // add definition methods.
             for(method in classObj.methods) {
-                if(method !== "init") {
+                if(method !== "__init") {
                     $classPrototype[method] = classObj.methods[method] ;
                 }
             }

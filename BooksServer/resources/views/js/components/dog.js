@@ -1,10 +1,13 @@
 define.Class("nir.Dog", function(def) {
+
+    def.extends = "nir.Animal" ;
+
     def.methods = {
-        init: function(name) {
+        __init: function(name) {
             this._name = name ;
         },
 
-        bark: function() {
+        speak: function() {
             console.log(this._name + " says: Woof! Woof!") ;
         }
     } ;

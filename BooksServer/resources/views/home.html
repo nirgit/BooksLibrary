@@ -2,13 +2,12 @@
 <head>
     <title>Book library</title>
     <script src="lib/jquery-2.0.3.min.js"></script>
-    <script src="js/bookClient.js"></script>
     <script src="js/utils/define.js"></script>
-    <script src="js/views/view.js"></script>
-
-    <script src="js/components/dog.js"></script>
+    <script src="js/utils/loader.js"></script>
     <script>
         function init() {
+            getAllBooks() ;
+
             $("#searchButton").on('click', function() {
                 var bookName = $("#bookNameToSearch").val() ;
                 getBook(bookName) ;
@@ -16,7 +15,7 @@
         }
     </script>
 </head>
-<body onload="init()">
+<body>
     <div>
         <h1>List of all available books</h1>
         <div id="allBooks">
@@ -32,8 +31,16 @@
 
     <div id="results"></div>
 
-    <script>
-        getAllBooks() ;
-    </script>
+<script>
+    loadScripts([
+        "bookClient.js",
+        "views/view.js",
+        "components/animal.js",
+        "components/dog.js",
+        "components/person.js"
+    ], function() {
+        setTimeout(init, 500) ;
+    }) ;
+</script>
 </body>
 </html>
