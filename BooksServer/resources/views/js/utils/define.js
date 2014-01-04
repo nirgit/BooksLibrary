@@ -75,11 +75,13 @@ window.define = (function() {
             // add definition methods.
             var classPrototype = $Class.prototype ;
             for(method in classObj.methods) {
-                classPrototype[method] = classObj.methods[method] ;
+                classPrototype[method]              = classObj.methods[method] ;
+                classPrototype[method].$methodName  = method ;
             }
 
             classPrototype.super = function() {
-                classPrototype.prototype.__init.apply(this, arguments) ;
+                var callerFunction = arguments.callee.caller.$methodName ;
+                classPrototype.prototype[callerFunction].apply(this, arguments) ;
             }
 
             if($classProto) {

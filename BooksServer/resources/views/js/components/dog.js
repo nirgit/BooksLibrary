@@ -8,6 +8,7 @@ define.Class("nir.Dog", function(def) {
         },
 
         speak: function() {
+            this.super() ;
             console.log(this._name + " says: Woof! Woof!") ;
         }
     } ;
