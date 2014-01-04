@@ -7,7 +7,7 @@ version = '1.0'
 sourceSets {
     main {
         java {
-            srcDir 'src'
+            srcDir 'src/java'
         }
     }
 }
@@ -68,5 +68,12 @@ task deployToTomcat(type: Copy) {
         }
     } else {
         println "Failed copying, TOMCAT_HOME ENV variable wasn't found."
+    }
+}
+
+task execGrunt {
+    // This works on WINDOWS ONLY!
+    doLast {
+        println "grunt.cmd".execute().text
     }
 }

@@ -25,7 +25,8 @@ public class BookTest {
 
     @Before
     public void setUp() throws Exception {
-        PersonId owner = new PersonId(123);
+        PersonId ownerId = new PersonId(123L);
+        Owner owner = new Owner(ownerId, "no-name", "no@email.com") ;
         this.book = new Book(BOOK_ID, BOOK_NAME, BOOK_AUTH , BOOK_YEAR, owner) ;
     }
 

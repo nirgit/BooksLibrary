@@ -2,8 +2,7 @@
 <head>
     <title>Book library</title>
     <script src="lib/jquery-2.0.3.min.js"></script>
-    <script src="js/utils/define.js"></script>
-    <script src="js/utils/loader.js"></script>
+    <script src="concat-app.js"></script>
     <script>
         function init() {
             getAllBooks() ;
@@ -31,15 +30,5 @@
 
     <div id="results"></div>
 
-<script>
-    loadScripts([
-        "bookClient.js",
-        "views/view.js",
-        "components/animal.js",
-        "components/dog.js"
-    ], function() {
-        setTimeout(init, 500) ;
-    }) ;
-</script>
 </body>
 </html>

@@ -1,19 +1,14 @@
 package org.nm.books.logic;
 
 import junit.framework.Assert;
-import org.easymock.EasyMock;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.nm.books.dal.BooksDAO;
-import org.nm.books.model.Book;
-import org.nm.books.model.BookId;
-import org.nm.books.model.BookLend;
-import org.nm.books.model.PersonId;
+import org.nm.books.model.*;
 import org.nm.books.model.dal.IBooksDAO;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 /**
@@ -24,7 +19,8 @@ import java.util.List;
  */
 public class BooksLogicTest {
 
-    private final static Book BOOK = new Book(new BookId("b-ID1"), "test book", "nir", 2013, new PersonId(11)) ;
+    private final static Book BOOK =
+            new Book(new BookId("b-ID1"), "test book", "nir", 2013, new Owner(new PersonId(11L), null, null)) ;
     private BooksLogic logic ;
 
     @Before
@@ -37,7 +33,7 @@ public class BooksLogicTest {
         List<Book> books = new ArrayList<Book>() ;
         books.add(BOOK) ;
 
-        return new BooksDAO(books) ;
+        return new BooksDAO() ;
     }
 
     @After
@@ -61,13 +57,13 @@ public class BooksLogicTest {
 
     @Test
     public void testGetAllBooksTakenByPerson() throws Exception {
-        BookLend lend = new BookLend(new BookId("b-ID1"), new PersonId(123));
+        BookLend lend = new BookLend(new BookId("b-ID1"), new PersonId(123L));
         this.logic.lendABook(lend);
 
-        List<Book> lentBooks = logic.getAllBooksTakenByPerson(new PersonId(456));
+        List<Book> lentBooks = logic.getAllBooksTakenByPerson(new PersonId(456L));
         Assert.assertTrue(lentBooks.isEmpty());
 
-        lentBooks = logic.getAllBooksTakenByPerson(new PersonId(123)) ;
+        lentBooks = logic.getAllBooksTakenByPerson(new PersonId(123L)) ;
         Assert.assertEquals(lentBooks.size(), 1);
         Assert.assertEquals(lentBooks.get(0), BOOK);
     }
@@ -89,7 +85,9 @@ public class BooksLogicTest {
         int numberOfBooksAfterAdd = this.logic.getAllBooks().size() ;
         Assert.assertEquals(numberOfBooks, numberOfBooksAfterAdd);
 
-        Book newBook = new Book(new BookId("newBook-ID"), "Some new book", "some author", 2013, new PersonId(22)) ;
+        PersonId personId = new PersonId(22L);
+        Owner owner = new Owner(personId, null,null) ;
+        Book newBook = new Book(new BookId("newBook-ID"), "Some new book", "some author", 2013, owner) ;
         this.logic.addBook(newBook);
         numberOfBooksAfterAdd = this.logic.getAllBooks().size() ;
         Assert.assertEquals(numberOfBooks + 1, numberOfBooksAfterAdd);
