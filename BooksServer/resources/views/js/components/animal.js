@@ -10,7 +10,7 @@ define.Class("nir.Animal", function(def){
         },
 
         speak: function() {
-            // TODO NMO 12/30/13 12:15 AM - abstract method to implement by inheriting classes.
+            console.log("My name is " + this._name) ;
         }
     } ;
 

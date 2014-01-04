@@ -38,9 +38,6 @@ window.define = (function() {
             if(!classFullName || !ClassDef) {
                 isValid = false ;
                 console.error("Definition of class must have a classFullName and definition.") ;
-            } else if(this._isClassDefined(ClassDef)) {
-                isValid = false ;
-                console.log("Class '%s' is already defined", classFullName) ;
             }
             return isValid ;
         },
