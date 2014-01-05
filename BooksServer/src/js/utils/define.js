@@ -17,7 +17,6 @@ window.define = (function() {
             return this._classes[classFullName] ;
         },
 
-
         Class: function(classFullName, ClassDef) {
             // validation
             if(!this._shouldCreateClass(classFullName, ClassDef)) ;
@@ -29,7 +28,26 @@ window.define = (function() {
 
             var readyClass = this._buildClass(classFullName, defInstance, $classProto) ;
             if(readyClass) {
-                this._classes[classFullName] = readyClass ;
+                this._setClass(classFullName, readyClass) ;
+            }
+        },
+
+        _setClass: function(classFullName, classInstance) {
+            if(!classFullName || !classInstance) return ;
+            this._classes[classFullName] = classInstance ;
+            // place it in it's own namespace.
+            this._putClassInNamespace(window, classFullName, classInstance) ;
+        },
+
+        _putClassInNamespace: function(scope, classFullName, classInstance) {
+            if(!classFullName || !classInstance) return ;
+            var nameSplit = classFullName.split(".") ;
+            if(nameSplit.length === 1) {
+                scope[classFullName] = classInstance ;
+            } else {
+                var first = nameSplit.shift() ;
+                scope[first] = scope[first] || {} ;
+                this._putClassInNamespace(scope[first], nameSplit.join("."), classInstance) ;
             }
         },
 

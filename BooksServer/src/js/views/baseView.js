@@ -3,7 +3,7 @@
 /**
 *   C'tor
 */
-define.Class("views.View", function(def) {
+define.Class("views.BaseView", function(def) {
     def.methods = {
         __init: function(node, args) {
             this._node = node ;
