@@ -25,7 +25,7 @@ window.define = (function() {
             // creation of definition
             var defInstance = {} ;
             ClassDef(defInstance) ;
-            var $classProto = this._createClassPrototype(defInstance) ;
+            var $classProto = this._createClassPrototype(defInstance, classFullName) ;
 
             var readyClass = this._buildClass(classFullName, defInstance, $classProto) ;
             if(readyClass) {
@@ -42,13 +42,13 @@ window.define = (function() {
             return isValid ;
         },
 
-        _createClassPrototype: function(defInstance) {
+        _createClassPrototype: function(defInstance, classFullName) {
             if(!defInstance.extends) {
                 return null ;
             } else {
                 // validate the existence of the parent.
                 if(!this._isClassDefined(defInstance.extends)) {
-                    console.error("Class " + defInstance.extends + " to inherit, is not defined.") ;
+                    console.error("Class %s to inherit, is not defined. Can't create class %s", defInstance.extends, classFullName) ;
                     return null ;
                 }
                 // inherit the parent

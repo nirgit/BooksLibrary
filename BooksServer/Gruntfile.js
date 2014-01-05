@@ -7,8 +7,8 @@ module.exports = function(grunt) {
               separator: ';'
             },
             dist: {
-              src: ['src/js/utils/**.*', 'src/js/views/**.*', 'src/js/components/**.*'],
-              dest: 'resources/views/concat-app.js'
+              src: ['src/js/utils/**.*', 'src/js/views/**.*', 'src/js/components/**.*', 'src/js/bookClient.js'],
+              dest: 'resources/views/concat-app.out.js'
             }
         }
     });
