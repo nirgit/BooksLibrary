@@ -10,64 +10,17 @@
 
 module.exports = function(grunt) {
 
-  // Project configuration.
-  grunt.initConfig({
-    jshint: {
-      all: [
-        'Gruntfile.js',
-        'tasks/*.js',
-        '<%= nodeunit.tests %>',
-      ],
-      options: {
-        jshintrc: '.jshintrc',
-      },
-    },
+    grunt.registerTask("aggregize", function() {
+        var defaults = ["some string as default..."] ;
 
-    // Before generating any new files, remove any previously-created files.
-    clean: {
-      tests: ['tmp'],
-    },
+        var aggConfig = grunt.config('aggregize')["rootDir"] ;
+        if(!aggConfig) {
+            grunt.log.error("ABORTING! Must define 'rootDir' in 'aggregize' config");
+            return ;
+        }
 
-    // Configuration to be run (and then tested).
-    aggregizer: {
-      default_options: {
-        options: {
-        },
-        files: {
-          'tmp/default_options': ['test/fixtures/testing', 'test/fixtures/123'],
-        },
-      },
-      custom_options: {
-        options: {
-          separator: ': ',
-          punctuation: ' !!!',
-        },
-        files: {
-          'tmp/custom_options': ['test/fixtures/testing', 'test/fixtures/123'],
-        },
-      },
-    },
 
-    // Unit tests.
-    nodeunit: {
-      tests: ['test/*_test.js'],
-    },
-
-  });
-
-  // Actually load this plugin's task(s).
-  grunt.loadTasks('tasks');
-
-  // These plugins provide necessary tasks.
-  grunt.loadNpmTasks('grunt-contrib-jshint');
-  grunt.loadNpmTasks('grunt-contrib-clean');
-  grunt.loadNpmTasks('grunt-contrib-nodeunit');
-
-  // Whenever the "test" task is run, first clean the "tmp" dir, then run this
-  // plugin's task(s), then test the result.
-  grunt.registerTask('test', ['clean', 'aggregizer', 'nodeunit']);
-
-  // By default, lint and run all tests.
-  grunt.registerTask('default', ['jshint', 'test']);
-
+        grunt.log.writeln(aggConfig) ;
+        grunt.log.writeln("Running Aggregization!!!!!!!!!!!") ;
+    })
 };
