@@ -10,17 +10,29 @@
 
 module.exports = function(grunt) {
 
-    grunt.registerTask("aggregize", function() {
-        var defaults = ["some string as default..."] ;
+    grunt.file.defaultEncoding = 'utf8';
 
-        var aggConfig = grunt.config('aggregize')["rootDir"] ;
-        if(!aggConfig) {
-            grunt.log.error("ABORTING! Must define 'rootDir' in 'aggregize' config");
+    grunt.registerTask("aggregizer", function() {
+        var dir = grunt.config.get('aggregizer').path[0] ;
+        if(!dir) {
+            grunt.log.error("ABORTING! Must define 'path' in 'aggregizer' config");
             return ;
         }
 
+        grunt.log.writeln("Root dir is: " + dir) ;
+        var allFilesBuf = "" ;
 
-        grunt.log.writeln(aggConfig) ;
-        grunt.log.writeln("Running Aggregization!!!!!!!!!!!") ;
-    })
+        grunt.file.base = dir ;
+
+        grunt.file.recurse(dir, function(abspath, rootdir, subdir, filename) {
+            // TODO NMO 1/7/14 1:12 AM - perform a DAG algorithm on the files in order to sort them.
+            if(filename.indexOf(".js") >= 0) {
+                grunt.log.writeln(abspath) ;
+            }
+//            var fileContents = grunt.file.read(filename, {encoding: "utf8"}) ;
+//            allFilesBuf+=fileContents;
+        }) ;
+
+        grunt.log.writeln("Contents = " + allFileBuf) ;
+    }) ;
 };

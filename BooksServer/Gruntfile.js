@@ -42,8 +42,8 @@ module.exports = function(grunt) {
           tasks: ['jshint']
         },
 
-        aggregize: {
-            rootDir: ["src/js"]
+        aggregizer: {
+            path: ["src/js"]
         }
     });
 
@@ -51,6 +51,5 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-contrib-jshint');
     grunt.loadTasks('../tools/aggregizer');
 
-//    grunt.registerTask('default', ['concat']);
-    grunt.registerTask('default', ['aggregize']);
+    grunt.registerTask('default', ['aggregizer']);
 }
