@@ -43,7 +43,8 @@ module.exports = function(grunt) {
         },
 
         aggregizer: {
-            path: ["src/js"]
+            path: ["src/js"],
+            outputFile: "./resources/views/concat-app.out.js"
         }
     });
 
