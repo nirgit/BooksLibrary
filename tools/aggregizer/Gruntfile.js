@@ -13,15 +13,16 @@ module.exports = function(grunt) {
     grunt.file.defaultEncoding = 'utf8';
 
     grunt.registerTask("aggregizer", function() {
-        var dir         = grunt.config.get('aggregizer').path[0] ;
-        var outputFile  = grunt.config.get('aggregizer').outputFile ;
+        var dir             = grunt.config.get('aggregizer').path[0] ;
+        var preOrderedFiles = grunt.config.get('aggregizer').orderedFiles ;
+        var outputFile      = grunt.config.get('aggregizer').outputFile ;
         if(!dir) {
             grunt.log.error("ABORTING! Must define 'path' in 'aggregizer' config");
             return ;
         }
         grunt.file.base = dir ;
         var graph = getAllGraphNodes(dir) ;
-        var sortedGraph = sortGraphUsingDAG(graph) ;
+        var sortedGraph = sortGraphUsingDAG(graph, preOrderedFiles) ;
         var concatenatedResult = getFileContentsAccordingToGraph(sortedGraph) ;
         grunt.file.write(outputFile, concatenatedResult) ;
         grunt.log.writeln("Finished successfully! \n\n\n Contents written to %s", outputFile) ;
@@ -39,7 +40,6 @@ module.exports = function(grunt) {
     function getAllGraphNodes(dir) {
         var graph = [] ;
         grunt.file.recurse(dir, function(abspath, rootdir, subdir, filename) {
-            // TODO NMO 1/7/14 1:12 AM - perform a DAG algorithm on the files in order to sort them.
             if(filename.indexOf(".js") >= 0) {
                 var fileContents = readFileContents(abspath) ;
                 var parentClass  = getParentClass(fileContents) ;
@@ -59,14 +59,43 @@ module.exports = function(grunt) {
         }
     } ;
 
-    function sortGraphUsingDAG(graph) {
+    function sortGraphUsingDAG(graph, preOrderedFiles) {
         var loaded = [] ;
+        if(preOrderedFiles && preOrderedFiles.length > 0) {
+            var result = sortByPreorder(graph, preOrderedFiles) ;
+            loaded = result[0] ;
+            graph = result[1] ;
+        }
         for(var index=0; index < graph.length; index++) {
             var item = graph[index] ;
             loadExtendChainForItem(item, graph, loaded) ;
         }
         return loaded ;
     } ;
+
+    function sortByPreorder(unsortedGraph, preOrderedFiles) {
+        var partiallyLoadedGraph = [] ;
+        for(var i=0; i < preOrderedFiles.length; i++) {
+            var preOrderedFileName = preOrderedFiles[i] ;
+//            grunt.log.writeln("---------- preOrder for filename '%s' ---------", preOrderedFileName) ;
+            var foundIndex = -1 ;
+            for(var j=0; j < unsortedGraph.length; j++) {
+                var fileNode = unsortedGraph[j] ;
+//                grunt.log.writeln("fileNode.name is: '%s'", fileNode.name) ;
+                if(fileNode.name.indexOf(preOrderedFileName) >= 0) {
+                    partiallyLoadedGraph.push(fileNode) ;
+                    foundIndex = j ;
+                    break ;
+                }
+            }
+            if(foundIndex !== -1) {
+                var prefix = unsortedGraph.splice(0, j) ;
+                var suffix = unsortedGraph.splice(1, unsortedGraph.length) ;
+                unsortedGraph = prefix.concat(suffix) ;
+            }
+        }
+        return [partiallyLoadedGraph, unsortedGraph] ;
+    }
 
     function loadExtendChainForItem(itemToLoad, unSortedGraph, loadedItems) {
         if(isItemToLoadAlreadyLoaded(itemToLoad, loadedItems)) {
