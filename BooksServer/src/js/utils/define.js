@@ -71,11 +71,11 @@ window.define = (function() {
                 }
                 // inherit the parent
                 var parentClass = this.getClass(defInstance.extends) ;
-                return new parentClass() ;
+                return parentClass ;
             }
         },
 
-        _buildClass: function(classFullName, classObj, $classProto) {
+        _buildClass: function(classFullName, classObj, parentClass) {
             if(!classObj) {
                 return null ;
             }
@@ -91,7 +91,12 @@ window.define = (function() {
             var $Class                  = (new Function("ctor", 'return function ' + className + '(){ return ctor.apply(this, arguments);}'))(classCtor) ;
 
             // add definition methods.
-            var classPrototype = $Class.prototype ;
+            var classPrototype ;
+            if(parentClass) {
+                classPrototype = new parentClass() ;
+            } else {
+                classPrototype = $Class.prototype ;
+            }
             for(method in classObj.methods) {
                 classPrototype[method]              = classObj.methods[method] ;
                 classPrototype[method].$methodName  = method ;
@@ -99,13 +104,8 @@ window.define = (function() {
 
             classPrototype.super = function() {
                 var callerFunction = arguments.callee.caller.$methodName ;
-                classPrototype.prototype[callerFunction].apply(this, arguments) ;
+                classPrototype.__proto__[callerFunction].apply(this, arguments) ;
             }
-
-            if($classProto) {
-                classPrototype.prototype = $classProto ;
-            }
-
             $Class.prototype = classPrototype ;
             return $Class ;
         }
