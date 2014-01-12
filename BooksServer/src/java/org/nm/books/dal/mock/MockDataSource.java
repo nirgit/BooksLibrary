@@ -62,7 +62,7 @@ public class MockDataSource {
             Owner randomOwner   = owners.get(r.nextInt(owners.size()));
             String authorName   = authors.get(r.nextInt(authors.size())) ;
             int year            = firstPublishingYear + r.nextInt(currentYear-firstPublishingYear);
-            this.bookList.add(new Book(new BookId(UUID.randomUUID()+"-BID"), bookName, authorName, year, randomOwner)) ;
+            this.bookList.add(new Book(new BookId(r.nextLong()+"-BID"), bookName, authorName, year, randomOwner)) ;
         }
     }
 
