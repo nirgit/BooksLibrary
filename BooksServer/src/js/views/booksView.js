@@ -1,4 +1,4 @@
-define.Class("views.BooksView", function(def) {
+define.Class("views.BooksListView", function(def) {
 
     def.extends = "views.BaseView" ;
 
@@ -6,6 +6,10 @@ define.Class("views.BooksView", function(def) {
         __init: function(node, args) {
             this.super(node, args) ;
             this._createViewElements() ;
+        },
+
+        getBooksListHook: function() {
+            return this._bookList ;
         },
 
         _createViewElements: function(){

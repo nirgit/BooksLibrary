@@ -8,24 +8,12 @@ function getBook(bookName){
     }
 }
 
-function getAllBooks() {
-    $.get("../api/book/getAllBooks", function(booksData) {
-        if(booksData) {
-            for(var i=0; i < booksData.length; i++) {
-                var li = document.createElement("li") ;
-                var book = booksData[i] ;
-                li.innerText = book.name + " / " + book.author + " (" + book.year + ")" ;
-                $("#availableBooksList").append(li) ;
-            }
-        }
-    }) ;
-}
-
 // Entry point of the app
 function init() {
     var mainNode = document.getElementById("main") ;
-    var booksView = new views.BooksView(mainNode) ;
-    booksView.go() ;
+    var booksView = new views.BooksListView(mainNode) ;
+    var booksController = new controllers.BooksListController(booksView) ;
+    booksController.showBooksList() ;
 }
 
 function oldInit() {
