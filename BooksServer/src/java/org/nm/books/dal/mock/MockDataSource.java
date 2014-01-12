@@ -15,17 +15,22 @@ import java.util.*;
 public class MockDataSource {
 
     private static String[] firstNames =
-            {"Nir", "Joshua", "George", "Jerry", "Dana", "Karen", "Amy", "Sasha", "Ben", "William",
-             "Ali", "Andreas", "Nadia", "Carol", "Stewart", "Carl", "Chloe", "Connor", "Julia", "Sara"} ;
+            {"Nir", "Joshua", "Jerry", "Pamela", "Dana", "Karen", "Amy", "Sasha", "Ben", "William", "Alex",
+             "Ali", "Andreas", "Nadia", "Carol", "Stewart", "Carl", "Chloe", "Connor", "Julia", "Sara",
+             "Michael", "Tammy", "Susan", "George", "Frank", "Estel", "Helen", "Henry", "Kimberly"} ;
 
     private static String[] lastNames = {"Moav", "Bloch", "Kamil", "Rosenbaum", "Brown", "Smith", "Johnson", "Eliot",
-                                        "Shakespear", "Walters", "Friedman", "Simpson", "Bradley", "Ramirez", "Baron"} ;
+                                        "Shakespear", "Walters", "Friedman", "Simpson", "Bradley", "Ramirez", "Baron",
+                                        "Fox", "Fisher", "Bakers", "McDouglas", "Atkins", "Robertson", "Robinson",
+                                        "Gold", "Ryder", "Pitt", "Peterson", "Anderson"} ;
 
     private static String[] bookNames = {
             "Javascript the good parts", "Effective Java", "Camera", "Guns, Germs & Steel",
             "Steve Jobs", "Life of Pi", "Lord Of The Rings I", "Othelo", "The Swiss Kitchen",
             "The Hobbit", "Tom Sawyer", "Alice in Wonderland", "Dr. Doolittle", "Wilhelm Tell",
-            "Foundations", "Euclide Geometry", "Advanced Calculus", "jQuery 2.0"
+            "Foundations", "Euclide Geometry", "Advanced Calculus", "jQuery 2.0",
+            "Harry Potter", "The Hunger Games", "To Kill A Mockingbird", "Gone with the Wind",
+            "Little Women", "Animal Farm", "Romeo and Juliet", "Lord of the Flies"
     } ;
 
     private List<String> authors = null ;
@@ -33,7 +38,7 @@ public class MockDataSource {
     private List<Owner> owners = null ;
 
     final int NUMBER_OF_AUTHORS = firstNames.length ;
-    final int NUMBER_OF_OWNERS  = 10 ;
+    final int NUMBER_OF_OWNERS  = 20 ;
 
     public MockDataSource() {
         this.authors    = new ArrayList<>() ;
@@ -58,11 +63,16 @@ public class MockDataSource {
         int currentYear = Calendar.getInstance().get(Calendar.YEAR) ;
         final int firstPublishingYear = 1880 ;
         Random r = new Random(System.currentTimeMillis()) ;
+        Owner lastOwner = null ;
+        Owner randomOwner ;
         for(String bookName : bookNames) {
-            Owner randomOwner   = owners.get(r.nextInt(owners.size()));
+            do {
+                randomOwner   = owners.get(r.nextInt(owners.size()));
+            } while(randomOwner.equals(lastOwner)) ;
             String authorName   = authors.get(r.nextInt(authors.size())) ;
             int year            = firstPublishingYear + r.nextInt(currentYear-firstPublishingYear);
-            this.bookList.add(new Book(new BookId(r.nextLong()+"-BID"), bookName, authorName, year, randomOwner)) ;
+            this.bookList.add(new Book(new BookId(r.nextInt()+"-BID"), bookName, authorName, year, randomOwner)) ;
+            lastOwner = randomOwner ;
         }
     }
 
