@@ -20,9 +20,10 @@ define.Class("controllers.BooksListController", function(def) {
         },
 
         _addBookToList: function(book) {
-            var bookLi = new Element("li") ;
-            bookLi.innerHTML = book.name + " / " + book.author + " (" + book.year + ")" ;
-            this._view.getBooksListHook().appendChild(bookLi) ;
+            var bookHook        = new Element("div") ;
+            var bookView        = new views.BookView(bookHook) ;
+            var bookController  = new controllers.BookController(bookView, book) ;
+            this._view.getBooksListHook().appendChild(bookView.asElement()) ;
         }
     }
 

@@ -14,6 +14,10 @@ define.Class("views.BaseView", function(def) {
             this._render(this._node) ;
         },
 
+        asElement: function() {
+            return this._node ;
+        },
+
         // MUST be overriden in sub-classes.
         _render: function(view) {
             // TODO NMO 12/28/13 10:15 PM - this is an abstract implementation that does nothing.

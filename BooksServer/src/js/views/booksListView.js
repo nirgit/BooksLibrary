@@ -24,7 +24,7 @@ define.Class("views.BooksListView", function(def) {
         },
 
         _createBookList: function() {
-            var bookList = new Element("div", {width: "800px", height: "500px", position: "absolute", border: "4px solid purple"}) ;
+            var bookList = new Element("div", {width: "100%", height: "100%", border: "4px solid purple", overflow: "auto"}) ;
             bookList.innerHTML = "The actual book list..." ;
             return bookList ;
         },
