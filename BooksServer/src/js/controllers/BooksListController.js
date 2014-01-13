@@ -5,6 +5,9 @@ define.Class("controllers.BooksListController", function(def) {
             this._view = booksListView ;
             // Build View
             this._view.go() ;
+            // manipulate...
+
+            this._view.getSearchInput().value = "Hey dude... i'm your controller!" ;
         },
 
         showBooksList: function() {

@@ -12,15 +12,30 @@ define.Class("views.BooksListView", function(def) {
             return this._bookList ;
         },
 
+        getSearchInput: function() {
+            return $(this._search).find("#bookNameToSearch")[0] ;
+        },
+
         _createViewElements: function(){
-            this._title = this._createTitle() ;
-            this._bookList = this._createBookList() ;
+            this._title     = this._createTitle() ;
+            this._search    = this._createSearch() ;
+            this._bookList  = this._createBookList() ;
         },
 
         _createTitle: function() {
             var title = new Element("div") ;
             title.innerHTML = "Library Books" ;
             return title ;
+        },
+
+        _createSearch: function() {
+            var searchHTMLFragment = '<div id="bookSearch">' +
+                '<input id="bookNameToSearch" type="text" placeholder="Enter a book name..." maxlength="100"/>' +
+                '<span id="searchButton" class="button">Search!</span>' +
+                '</div>';
+            var searchContainer = new Element("div") ;
+            searchContainer.innerHTML = searchHTMLFragment ;
+            return searchContainer ;
         },
 
         _createBookList: function() {
@@ -31,6 +46,7 @@ define.Class("views.BooksListView", function(def) {
 
         _render: function(view) {
             view.appendChild(this._title) ;
+            view.appendChild(this._search) ;
             view.appendChild(this._bookList) ;
         }
     } ;
