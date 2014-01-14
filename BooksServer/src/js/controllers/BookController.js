@@ -1,11 +1,21 @@
 define.Class("controllers.BookController", function(def) {
 
     def.methods = {
-        __init: function(bookView, bookModel) {
+        __init: function(bookView, bookModel, eventBus) {
             this._view      = bookView ;
             this._bookModel = bookModel ;
             // Build View
             this._bindBookModelToView() ;
+            eventBus.addListener("BOOKS_FILTER", this, this._filterHandler) ;
+        },
+
+        _filterHandler: function(eventName, data) {
+            var bookName = this._bookModel.name.toLowerCase() ;
+            if(bookName.indexOf(data.filter.toLowerCase()) >= 0) {
+                this._view.asElement().style.display = "block" ;
+            } else {
+                this._view.asElement().style.display = "none" ;
+            }
         },
 
         _bindBookModelToView: function() {

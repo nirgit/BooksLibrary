@@ -1,13 +1,25 @@
 define.Class("controllers.BooksListController", function(def) {
 
     def.methods = {
-        __init: function(booksListView) {
-            this._view = booksListView ;
+        __init: function(booksListView, eventBus) {
+            this._eventBus  = eventBus ;
+            this._view      = booksListView ;
             // Build View
             this._view.go() ;
             // manipulate...
+            this._bindSearch() ;
+        },
 
-            this._view.getSearchInput().value = "Hey dude... i'm your controller!" ;
+        _bindSearch: function() {
+            var searchInput = this._view.getSearchInput() ;
+            searchInput.placeholder = "Search a book" ;
+            searchInput.value = "" ;
+            $(searchInput).on("keyup", this._filterBooks.bind(this)) ;
+        },
+
+        _filterBooks: function() {
+            var searchInput = this._view.getSearchInput() ;
+            this._eventBus.fireEvent("BOOKS_FILTER", {filter: searchInput.value}) ;
         },
 
         showBooksList: function() {
@@ -25,7 +37,7 @@ define.Class("controllers.BooksListController", function(def) {
         _addBookToList: function(book) {
             var bookHook        = new Element("div") ;
             var bookView        = new views.BookView(bookHook) ;
-            var bookController  = new controllers.BookController(bookView, book) ;
+            var bookController  = new controllers.BookController(bookView, book, this._eventBus) ;
             this._view.getBooksListHook().appendChild(bookView.asElement()) ;
         }
     }
