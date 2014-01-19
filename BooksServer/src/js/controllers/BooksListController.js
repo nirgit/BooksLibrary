@@ -14,7 +14,7 @@ define.Class("controllers.BooksListController", function(def) {
             var searchInput = this._view.getSearchInput() ;
             searchInput.placeholder = "Search a book" ;
             searchInput.value = "" ;
-            $(searchInput).on("keyup", this._filterBooks.bind(this)) ;
+            $(searchInput).on("keyup", utils.defer(this._filterBooks.bind(this))) ;
         },
 
         _filterBooks: function() {

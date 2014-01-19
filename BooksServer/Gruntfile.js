@@ -35,7 +35,7 @@ module.exports = function(grunt) {
 
         aggregizer: {
             path: ["src/js"],
-            orderedFiles: ["loader.js", "define.js", "domUtils.js"],
+            orderedFiles: ["loader.js", "define.js", "domUtils.js", "utils.js"],
             outputFile: "./build/js/concat-app.out.js"
         },
 
