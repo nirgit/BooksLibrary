@@ -27,29 +27,44 @@ define.Class("views.BookView", function(def) {
         },
 
         _createBookStyle: function() {
+            if(window._$bookStyleReady) {return} ;
             var style = new Element("style") ;
-            style.innerHTML = "." + this.CLASS_STYLE_NAME + "{" +
-            "border: 1px silver solid;" +
-            "padding: 5px;" +
-            "margin: 2px;" +
-            "float: left;" +
-            "width: 350px;" +
-            + "}" ;
+            style.innerHTML += "." + this.CLASS_STYLE_NAME +
+            "{" +
+                "background: url(imgs/book.jpg) 214px 266px;" +
+                "color: white;" +
+                "float: left;" +
+                "font-family: sans-serif;" +
+                "font-size: 20px;" +
+                "height: 250px;" +
+                "width: 190px;" +
+                "margin: 10px;" +
+                "text-align: center;" +
+                "word-wrap: break-word;" +
+            "}" ;
+
+            style.innerHTML += "." + this.CLASS_STYLE_NAME + "-title" +
+                "{" +
+                    "color: beige;" +
+                    "font-family: sans-serif;" +
+                    "font-size: 20px;" +
+                    "font-weight: bold;" +
+                    "margin-bottom: 10px;" +
+                    "text-align: center;" +
+                    "word-wrap: break-word;" +
+                "}" ;
 
             document.head.appendChild(style) ;
+            window._$bookStyleReady = true ;
         },
 
         _render: function(node) {
             var bookContainer       = new Element("div") ;
             bookContainer.className = this.CLASS_STYLE_NAME ;
-            this._title             = new Element("div") ;
-            this._title.innerHTML   = "Book Title" ;
-            this._author            = new Element("div") ;
-            this._author.innerHTML  = "Book Author" ;
-            this._year              = new Element("div") ;
-            this._year.innerHTML    = "Book Year" ;
-            this._owner             = new Element("div") ;
-            this._owner.innerHTML   = "Book Owner" ;
+            this._title             = this._createBookHeader("title") ;
+            this._author            = this._createBookHeader("author") ;
+            this._year              = this._createBookHeader("year") ;
+            this._owner             = this._createBookHeader("owner") ;
 
             bookContainer.appendChild(this._title) ;
             bookContainer.appendChild(this._author) ;
@@ -57,6 +72,12 @@ define.Class("views.BookView", function(def) {
             bookContainer.appendChild(this._owner) ;
 
             node.appendChild(bookContainer) ;
+        },
+
+        _createBookHeader: function(subStyleName) {
+            var element = new Element("div") ;
+            element.className = this.CLASS_STYLE_NAME + "-" + subStyleName ;
+            return element ;
         }
     }
 }) ;
