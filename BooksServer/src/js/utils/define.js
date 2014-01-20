@@ -91,23 +91,50 @@ window.define = (function() {
             var $Class                  = (new Function("ctor", 'return function ' + className + '(){ return ctor.apply(this, arguments);}'))(classCtor) ;
 
             // add definition methods.
+            var classPrototype = this._resolveClassPrototype(parentClass, $Class) ;
+            this._addMethodsToClassPrototype(classPrototype, classObj) ;
+            this._addStaticsToClassPrototype(classPrototype, classObj) ;
+            this._addSuperMethodToClassPrototype(classPrototype) ;
+
+            $Class.prototype = classPrototype ;
+            return $Class ;
+        },
+
+        _resolveClassPrototype: function(parentClass, $Class) {
             var classPrototype ;
             if(parentClass) {
                 classPrototype = new parentClass() ;
             } else {
                 classPrototype = $Class.prototype ;
             }
-            for(method in classObj.methods) {
-                classPrototype[method]              = classObj.methods[method] ;
+            return classPrototype ;
+        },
+
+        _addMethodsToClassPrototype: function(classPrototype, classDef) {
+            if(!classPrototype || !classDef || !classDef.methods) {
+                return;
+            }
+            for(var method in classDef.methods) {
+                classPrototype[method]              = classDef.methods[method] ;
                 classPrototype[method].$methodName  = method ;
             }
+        },
 
+        _addStaticsToClassPrototype: function(classPrototype, classDef) {
+            if(!classPrototype || !classDef || !classDef.statics) {
+                return;
+            }
+            for(var static in classDef.statics) {
+                classPrototype[static] = classDef.statics[static] ;
+            }
+        },
+
+        _addSuperMethodToClassPrototype: function(classPrototype) {
+            if(!classPrototype) {return ;}
             classPrototype.super = function() {
                 var callerFunction = arguments.callee.caller.$methodName ;
                 classPrototype.__proto__[callerFunction].apply(this, arguments) ;
             }
-            $Class.prototype = classPrototype ;
-            return $Class ;
         }
     } ;
 

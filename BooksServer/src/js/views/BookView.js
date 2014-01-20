@@ -2,10 +2,17 @@ define.Class("views.BookView", function(def) {
 
     def.extends = "views.BaseView" ;
 
+    def.statics = {
+        CLASS_STYLE_NAME: "book",
+        CLASS_TITLE_SUB_STYLE_NAME: "title",
+        CLASS_AUTHOR_SUB_STYLE_NAME: "author",
+        CLASS_YEAR_SUB_STYLE_NAME: "year",
+        CLASS_OWNER_SUB_STYLE_NAME: "owner"
+    } ;
+
     def.methods = {
         __init: function(node, args) {
             this.super(node, args) ;
-            this.CLASS_STYLE_NAME = "book" ;
             this._createBookStyle() ;
             this.go() ;
         },
@@ -34,24 +41,18 @@ define.Class("views.BookView", function(def) {
                 "background: url(imgs/book.jpg) 214px 266px;" +
                 "color: white;" +
                 "float: left;" +
-                "font-family: sans-serif;" +
-                "font-size: 20px;" +
-                "height: 250px;" +
-                "width: 190px;" +
+                "font-family: sans-serif; font-size: 20px;" +
+                "height: 250px; width: 190px;" +
                 "margin: 10px;" +
-                "text-align: center;" +
-                "word-wrap: break-word;" +
+                "text-align: center; word-wrap: break-word;" +
             "}" ;
 
-            style.innerHTML += "." + this.CLASS_STYLE_NAME + "-title" +
+            style.innerHTML += "." + utils.createClassStyle(this.CLASS_STYLE_NAME, this.CLASS_TITLE_SUB_STYLE_NAME) +
                 "{" +
-                    "color: beige;" +
-                    "font-family: sans-serif;" +
-                    "font-size: 20px;" +
-                    "font-weight: bold;" +
-                    "margin-bottom: 10px;" +
-                    "text-align: center;" +
-                    "word-wrap: break-word;" +
+                    "color: cadetblue;" +
+                    "font-family: sans-serif; font-size: 22px; font-weight: lighter;" +
+                    "margin: 5px;" +
+                    "text-align: center; word-wrap: break-word;" +
                 "}" ;
 
             document.head.appendChild(style) ;
@@ -61,10 +62,10 @@ define.Class("views.BookView", function(def) {
         _render: function(node) {
             var bookContainer       = new Element("div") ;
             bookContainer.className = this.CLASS_STYLE_NAME ;
-            this._title             = this._createBookHeader("title") ;
-            this._author            = this._createBookHeader("author") ;
-            this._year              = this._createBookHeader("year") ;
-            this._owner             = this._createBookHeader("owner") ;
+            this._title             = this._createBookHeader(this.CLASS_TITLE_SUB_STYLE_NAME) ;
+            this._author            = this._createBookHeader(this.CLASS_AUTHOR_SUB_STYLE_NAME) ;
+            this._year              = this._createBookHeader(this.CLASS_YEAR_SUB_STYLE_NAME) ;
+            this._owner             = this._createBookHeader(this.CLASS_OWNER_SUB_STYLE_NAME) ;
 
             bookContainer.appendChild(this._title) ;
             bookContainer.appendChild(this._author) ;
@@ -76,7 +77,7 @@ define.Class("views.BookView", function(def) {
 
         _createBookHeader: function(subStyleName) {
             var element = new Element("div") ;
-            element.className = this.CLASS_STYLE_NAME + "-" + subStyleName ;
+            element.className = utils.createClassStyle(this.CLASS_STYLE_NAME, subStyleName) ;
             return element ;
         }
     }

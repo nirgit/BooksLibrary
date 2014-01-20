@@ -2,7 +2,9 @@
 
     window.utils = window.utils || {} ;
 
-    window.utils.defer = function(f) {
+    var utils = window.utils ;
+
+    utils.defer = function(f) {
         return function() {
             return setTimeout(function() {
                 f() ;
@@ -10,4 +12,14 @@
         }
     } ;
 
+    utils.createClassStyle = function(className, subClassName) {
+        var name = null ;
+        if(className) {
+            name = className ;
+            if(subClassName) {
+                name += "-" + subClassName ;
+            }
+        }
+        return name ;
+    } ;
 })() ;
