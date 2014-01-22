@@ -1,7 +1,7 @@
 {
   "name": "grunt-aggregizer",
   "description": "Aggregates and organizes the order of the JS files.",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "homepage": "",
   "author": {
     "name": "Nir Moav",

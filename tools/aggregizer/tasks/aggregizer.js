@@ -10,41 +10,162 @@
 
 module.exports = function(grunt) {
 
-  // Please see the Grunt documentation for more information regarding task
-  // creation: http://gruntjs.com/creating-tasks
+    grunt.file.defaultEncoding = 'utf8';
 
-  grunt.registerMultiTask('aggregizer', 'Aggregates and organizes the order of the JS files.', function() {
-    // Merge task-specific and/or target-specific options with these defaults.
-    var options = this.options({
-      punctuation: '.',
-      separator: ', '
-    });
-
-    // Iterate over all specified file groups.
-    this.files.forEach(function(f) {
-      // Concat specified files.
-      var src = f.src.filter(function(filepath) {
-        // Warn on and remove invalid source files (if nonull was set).
-        if (!grunt.file.exists(filepath)) {
-          grunt.log.warn('Source file "' + filepath + '" not found.');
-          return false;
-        } else {
-          return true;
+    grunt.registerTask("aggregizer", function() {
+        var dir             = grunt.config.get('aggregizer').path[0] ;
+        var preOrderedFiles = grunt.config.get('aggregizer').orderedFiles ;
+        var outputFile      = grunt.config.get('aggregizer').outputFile ;
+        if(!dir) {
+            grunt.log.error("ABORTING! Must define 'path' in 'aggregizer' config");
+            return ;
         }
-      }).map(function(filepath) {
-        // Read file source.
-        return grunt.file.read(filepath);
-      }).join(grunt.util.normalizelf(options.separator));
+        grunt.file.base = dir ;
+        var graph = getAllGraphNodes(dir) ;
+        var sortedGraph = sortGraphUsingDAG(graph, preOrderedFiles) ;
+        var concatenatedResult = getFileContentsAccordingToGraph(sortedGraph) ;
+        grunt.file.write(outputFile, concatenatedResult) ;
+        grunt.log.writeln("Finished successfully! \n\n\n Contents written to %s", outputFile) ;
+    }) ;
 
-      // Handle options.
-      src += options.punctuation;
+    function getFileContentsAccordingToGraph(fileListToReadAndConcat) {
+        var result = "" ;
+        for(var f=0; f < fileListToReadAndConcat.length; f++) {
+            var fileName = fileListToReadAndConcat[f].name ;
+            result += grunt.file.read(fileName) ;
+        }
+        return result ;
+    };
 
-      // Write the destination file.
-      grunt.file.write(f.dest, src);
+    function getAllGraphNodes(dir) {
+        var graph = [] ;
+        grunt.file.recurse(dir, function(abspath, rootdir, subdir, filename) {
+            if(filename.indexOf(".js") >= 0) {
+                var fileContents = readFileContents(abspath) ;
+                var parentClass  = getParentClass(fileContents) ;
+                graph.push({'name': abspath, 'extends': parentClass}) ;
+            }
+        }) ;
+        return graph ;
+    } ;
 
-      // Print a success message.
-      grunt.log.writeln('File "' + f.dest + '" created.');
-    });
-  });
+    function getParentClass(fileContents) {
+        var parentClassRegex = new RegExp("[ ]*def.extends[ ]*=[ ]*[\"'](.*)['\"]") ;
+        var result = parentClassRegex.exec(fileContents) ;
+        if(result) {
+            return result[1] ;
+        } else {
+            return null ;
+        }
+    } ;
 
-};
+    function sortGraphUsingDAG(graph, preOrderedFiles) {
+        var loaded = [] ;
+        if(preOrderedFiles && preOrderedFiles.length > 0) {
+            var result = sortByPreorder(graph, preOrderedFiles) ;
+            loaded = result[0] ;
+            graph = result[1] ;
+        }
+        for(var index=0; index < graph.length; index++) {
+            var item = graph[index] ;
+            loadExtendChainForItem(item, graph, loaded) ;
+        }
+        return loaded ;
+    } ;
+
+    function sortByPreorder(unsortedGraph, preOrderedFiles) {
+        var partiallyLoadedGraph = [] ;
+        for(var i=0; i < preOrderedFiles.length; i++) {
+            var preOrderedFileName = preOrderedFiles[i] ;
+//            grunt.log.writeln("---------- preOrder for filename '%s' ---------", preOrderedFileName) ;
+            var foundIndex = -1 ;
+            for(var j=0; j < unsortedGraph.length; j++) {
+                var fileNode = unsortedGraph[j] ;
+//                grunt.log.writeln("fileNode.name is: '%s'", fileNode.name) ;
+                if(fileNode.name.indexOf(preOrderedFileName) >= 0) {
+                    partiallyLoadedGraph.push(fileNode) ;
+                    foundIndex = j ;
+                    break ;
+                }
+            }
+            if(foundIndex !== -1) {
+                var prefix = unsortedGraph.splice(0, j) ;
+                var suffix = unsortedGraph.splice(1, unsortedGraph.length) ;
+                unsortedGraph = prefix.concat(suffix) ;
+            }
+        }
+        return [partiallyLoadedGraph, unsortedGraph] ;
+    }
+
+    function loadExtendChainForItem(itemToLoad, unSortedGraph, loadedItems) {
+        if(isItemToLoadAlreadyLoaded(itemToLoad, loadedItems)) {
+            return ;
+        }
+        var parentClass = itemToLoad.extends ;
+        if(parentClass === null) {
+            loadedItems.push(itemToLoad) ;
+            return true ;
+        } else {
+            var isParentChainLoaded = isClassLoaded(parentClass, loadedItems) ;
+            if(isParentChainLoaded) {
+                loadedItems.push(itemToLoad) ;
+                return true ;
+            } else {
+                for(var i=0; i < unSortedGraph.length; i++) {
+                    if(getClassNameFromFile(unSortedGraph[i].name) === parentClass) {
+                        isParentChainLoaded = loadExtendChainForItem(unSortedGraph[i], unSortedGraph, loadedItems);
+                        break ;
+                    }
+                }
+                if(isParentChainLoaded) {
+                    loadedItems.push(itemToLoad) ;
+                    return true ;
+                } else {
+                    grunt.log.error("Parent class %s cannot be found for %s", parentClass, itemToLoad.name) ;
+                    return false ;
+                }
+            }
+        }
+    }
+
+    function isItemToLoadAlreadyLoaded(itemToLoad, loadedItems) {
+        var result = false ;
+        for(var k=0; k < loadedItems.length; k++) {
+            if(loadedItems[k].name === itemToLoad.name &&
+               loadedItems[k].extends === itemToLoad.extends) {
+               result = true;
+               break ;
+           }
+        }
+        return result ;
+    } ;
+
+    function isClassLoaded(className, loadedItems) {
+        for(var j=0; j < loadedItems.length; j++) {
+            var loadedFileName = loadedItems[j].name ;
+            var loadedFileClassName = getClassNameFromFile(loadedFileName) ;
+            if(loadedFileClassName === className) {
+                return true ;
+            }
+        }
+        return false ;
+    }
+
+    function getClassNameFromFile(fileName) {
+        var loadedFileContent = readFileContents(fileName) ;
+        var classNameRegex = new RegExp("[ ]*define.Class[ ]*[\(][ ]*['\"](.*)['\"][ ]*,") ;
+        var result = classNameRegex.exec(loadedFileContent) ;
+        if(result === null) {
+            return null ;
+        } else {
+            return result[1] ;
+        }
+    }
+
+    function readFileContents(absPath) {
+        if(!absPath) {
+            return null ;
+        }
+        return grunt.file.read(absPath) ;
+    } ;
+} ;

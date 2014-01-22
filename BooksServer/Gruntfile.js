@@ -53,7 +53,7 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-contrib-uglify');
 
     // Custom tasks (local plugin)
-    grunt.loadTasks('../tools/aggregizer');
+    grunt.loadNpmTasks('grunt-aggregizer');
 
     grunt.registerTask('default', ['aggregizer', 'uglify']);
 }
