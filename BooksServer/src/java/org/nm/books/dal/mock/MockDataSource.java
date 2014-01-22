@@ -14,15 +14,19 @@ import java.util.*;
  */
 public class MockDataSource {
 
-    private static String[] firstNames =
-            {"Nir", "Joshua", "Jerry", "Pamela", "Dana", "Karen", "Amy", "Sasha", "Ben", "William", "Alex",
-             "Ali", "Andreas", "Nadia", "Carol", "Stewart", "Carl", "Chloe", "Connor", "Julia", "Sara",
-             "Michael", "Tammy", "Susan", "George", "Frank", "Estel", "Helen", "Henry", "Kimberly"} ;
+    private static String[] firstNames = {
+            "Nir", "Joshua", "Jerry", "Pamela", "Dana", "Karen", "Amy", "Sasha", "Ben", "William", "Alex",
+            "Ali", "Andreas", "Nadia", "Carol", "Stewart", "Carl", "Chloe", "Connor", "Julia", "Sara",
+            "Michael", "Tammy", "Susan", "George", "Frank", "Estel", "Helen", "Henry", "Kimberly", "John",
+            "Martin", "Miguel"
+    } ;
 
-    private static String[] lastNames = {"Moav", "Bloch", "Kamil", "Rosenbaum", "Brown", "Smith", "Johnson", "Eliot",
-                                        "Shakespear", "Walters", "Friedman", "Simpson", "Bradley", "Ramirez", "Baron",
-                                        "Fox", "Fisher", "Bakers", "McDouglas", "Atkins", "Robertson", "Robinson",
-                                        "Gold", "Ryder", "Pitt", "Peterson", "Anderson"} ;
+    private static String[] lastNames = {
+            "Moav", "Bloch", "Kamil", "Rosenbaum", "Brown", "Smith", "Johnson", "Eliot",
+            "Shakespear", "Walters", "Friedman", "Simpson", "Bradley", "Ramirez", "Baron",
+            "Fox", "Fisher", "Bakers", "McDouglas", "Atkins", "Robertson", "Robinson",
+            "Gold", "Ryder", "Pitt", "Peterson", "Anderson", "Steinbeck", "Amis", "Cervantes"
+    } ;
 
     private static String[] bookNames = {
             "Javascript the good parts", "Effective Java", "Camera", "Guns, Germs & Steel",
@@ -30,7 +34,8 @@ public class MockDataSource {
             "The Hobbit", "Tom Sawyer", "Alice in Wonderland", "Dr. Doolittle", "Wilhelm Tell",
             "Foundations", "Euclide Geometry", "Advanced Calculus", "jQuery 2.0",
             "Harry Potter", "The Hunger Games", "To Kill A Mockingbird", "Gone with the Wind",
-            "Little Women", "Animal Farm", "Romeo and Juliet", "Lord of the Flies"
+            "Little Women", "Animal Farm", "Romeo and Juliet", "Lord of the Flies",
+            "The Grapes of Wrath", "Lolita", "The Information", "Don Quixote"
     } ;
 
     private List<String> authors = null ;
@@ -38,7 +43,7 @@ public class MockDataSource {
     private List<Owner> owners = null ;
 
     final int NUMBER_OF_AUTHORS = firstNames.length ;
-    final int NUMBER_OF_OWNERS  = 20 ;
+    final int NUMBER_OF_OWNERS  = 30 ;
 
     public MockDataSource() {
         this.authors    = new ArrayList<>() ;
@@ -84,7 +89,7 @@ public class MockDataSource {
             String name = firstName + " " + lastName;
             if(!authors.contains(name)) {
                 String email = firstName + "." + lastName + "@gmail.com";
-                Owner owner = new Owner(new PersonId(System.currentTimeMillis()), name, email) ;
+                Owner owner = new Owner(new PersonId(r.nextLong()), name, email) ;
                 owners.add(owner) ;
             }
         }
