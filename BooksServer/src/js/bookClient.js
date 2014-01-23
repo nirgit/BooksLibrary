@@ -1,13 +1,3 @@
-function getBook(bookName){
-    if(bookName) {
-        $.get("../api/book/" + bookName, function(bookData) {
-            $("#results").text(JSON.stringify(bookData)) ;
-        }) ;
-    } else {
-        $("#results").text(bookName + " - Book is not found!") ;
-    }
-}
-
 // Entry point of the app
 function init() {
     var eventBus = new utils.EventBus() ;
@@ -15,13 +5,4 @@ function init() {
     var booksView = new views.BooksListView(mainNode) ;
     var booksController = new controllers.BooksListController(booksView, eventBus) ;
     booksController.showBooksList() ;
-}
-
-function oldInit() {
-    getAllBooks() ;
-
-    $("#searchButton").on('click', function() {
-        var bookName = $("#bookNameToSearch").val() ;
-        getBook(bookName) ;
-    }) ;
 }
