@@ -97,6 +97,11 @@ window.define = (function() {
             this._addSuperMethodToClassPrototype(classPrototype) ;
 
             $Class.prototype = classPrototype ;
+            // in case there is a static Init
+            if(classObj && classObj.statics && classObj.statics.methods && classObj.statics.methods["__init"]) {
+                var staticInit = classObj.statics.methods["__init"] ;
+                staticInit.apply(classObj) ;
+            }
             return $Class ;
         },
 
@@ -124,8 +129,26 @@ window.define = (function() {
             if(!classPrototype || !classDef || !classDef.statics) {
                 return;
             }
-            for(var static in classDef.statics) {
-                classPrototype[static] = classDef.statics[static] ;
+            // define the static fields.
+            var staticFields = classDef.statics.fields ;
+            if(staticFields) {
+                for(var i=0; i < staticFields.length; i++) {
+                    var keyValuePair                = staticFields[i] ;
+                    if(keyValuePair && keyValuePair.length > 1) {
+                        classPrototype[keyValuePair[0]] = keyValuePair[1] ;
+                    }
+                }
+            }
+            // define the static methods! - binding the methods to the class!
+            var staticMethods = classDef.statics.methods ;
+            if(staticMethods) {
+                for(var methodName in staticMethods) {
+                    var staticFunction              = staticMethods[methodName] ;
+                    if(staticFunction) {
+                        staticFunction = staticFunction.bind(classPrototype) ;
+                    }
+                    classPrototype[methodName] = staticFunction ;
+                }
             }
         },
 

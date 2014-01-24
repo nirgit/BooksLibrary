@@ -4,7 +4,7 @@
 
     var utils = window.utils ;
 
-    utils.defer = function(f) {
+    utils.defer = function defer(f) {
         return function() {
             return setTimeout(function() {
                 f() ;
@@ -12,7 +12,7 @@
         }
     } ;
 
-    utils.createClassStyle = function(className, subClassName) {
+    utils.createClassStyle = function createClassStyle(className, subClassName) {
         var name = null ;
         if(className) {
             name = className ;
@@ -22,4 +22,13 @@
         }
         return name ;
     } ;
+
+    utils.runOnce = function runOnce(func) {
+        var hasExecuted = false ;
+        return function() {
+            if(!hasExecuted) {
+                func() ;
+            }
+        }
+    }
 })() ;

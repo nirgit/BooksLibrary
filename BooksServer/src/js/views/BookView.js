@@ -3,17 +3,38 @@ define.Class("views.BookView", function(def) {
     def.extends = "views.BaseView" ;
 
     def.statics = {
-        CLASS_STYLE_NAME: "book",
-        CLASS_TITLE_SUB_STYLE_NAME: "title",
-        CLASS_AUTHOR_SUB_STYLE_NAME: "author",
-        CLASS_YEAR_SUB_STYLE_NAME: "year",
-        CLASS_OWNER_SUB_STYLE_NAME: "owner"
+        fields: [
+            ['CLASS_STYLE_NAME', "book"],
+            ['CLASS_TITLE_SUB_STYLE_NAME', "title"],
+            ['CLASS_AUTHOR_SUB_STYLE_NAME', "author"],
+            ['CLASS_YEAR_SUB_STYLE_NAME', "year"],
+            ['CLASS_OWNER_SUB_STYLE_NAME', "owner"],
+            ['STYLES', {
+                        'BOOK':         ".book {background: url(imgs/book.jpg) 214px 266px; color: white; float: left; font-family: sans-serif;" +
+                                        "font-size: 20px; height: 250px; width: 190px; margin: 10px; text-align: center; word-wrap: break-word;}",
+                        'BOOK_TITLE':   ".book-title { color: cadetblue; font-family: sans-serif; font-size: 22px; font-weight: lighter;" +
+                                        "margin: 5px; text-align: center; word-wrap: break-word; }"
+                     }
+            ]
+        ],
+        methods: {
+            __init: function() {
+                this._createBookStyle() ;
+            },
+
+            _createBookStyle: function() {
+                var style = new Element("style") ;
+                style.innerHTML += this.STYLES.BOOK ;
+                style.innerHTML += this.STYLES.BOOK_TITLE ;
+
+                document.head.appendChild(style) ;
+            },
+        }
     } ;
 
     def.methods = {
         __init: function(node, args) {
             this.super(node, args) ;
-            this._createBookStyle() ;
             this.go() ;
         },
 
@@ -31,32 +52,6 @@ define.Class("views.BookView", function(def) {
 
         getOwner: function() {
             return this._owner ;
-        },
-
-        _createBookStyle: function() {
-            if(window._$bookStyleReady) {return} ;
-            var style = new Element("style") ;
-            style.innerHTML += "." + this.CLASS_STYLE_NAME +
-            "{" +
-                "background: url(imgs/book.jpg) 214px 266px;" +
-                "color: white;" +
-                "float: left;" +
-                "font-family: sans-serif; font-size: 20px;" +
-                "height: 250px; width: 190px;" +
-                "margin: 10px;" +
-                "text-align: center; word-wrap: break-word;" +
-            "}" ;
-
-            style.innerHTML += "." + utils.createClassStyle(this.CLASS_STYLE_NAME, this.CLASS_TITLE_SUB_STYLE_NAME) +
-                "{" +
-                    "color: cadetblue;" +
-                    "font-family: sans-serif; font-size: 22px; font-weight: lighter;" +
-                    "margin: 5px;" +
-                    "text-align: center; word-wrap: break-word;" +
-                "}" ;
-
-            document.head.appendChild(style) ;
-            window._$bookStyleReady = true ;
         },
 
         _render: function(node) {

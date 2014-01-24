@@ -36,13 +36,13 @@ module.exports = function(grunt) {
         aggregizer: {
             path: ["src/js"],
             orderedFiles: ["loader.js", "define.js", "domUtils.js", "utils.js"],
-            outputFile: "./build/js/concat-app.out.js"
+            outputFile: "./resources/views/app.js"
         },
 
         uglify: {
             my_target: {
               files: {
-                './resources/views/app.min.js': ["./build/js/concat-app.out.js"]
+                './resources/views/app.min.js': ["./resources/views/app.js"]
               }
             }
           }

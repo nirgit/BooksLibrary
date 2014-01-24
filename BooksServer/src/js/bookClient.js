@@ -5,4 +5,6 @@ function init() {
     var booksView = new views.BooksListView(mainNode) ;
     var booksController = new controllers.BooksListController(booksView, eventBus) ;
     booksController.showBooksList() ;
-}
+} ;
+
+window.document.addEventListener("APP_READY", init.bind(window), false) ;
