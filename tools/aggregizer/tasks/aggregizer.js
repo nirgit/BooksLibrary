@@ -24,9 +24,16 @@ module.exports = function(grunt) {
         var graph = getAllGraphNodes(dir) ;
         var sortedGraph = sortGraphUsingDAG(graph, preOrderedFiles) ;
         var concatenatedResult = getFileContentsAccordingToGraph(sortedGraph) ;
-        grunt.file.write(outputFile, concatenatedResult) ;
+        var finalResult = addFinishLoadingFileEvent(concatenatedResult) ;
+        grunt.file.write(outputFile, finalResult) ;
         grunt.log.writeln("Finished successfully! \n\n\n Contents written to %s", outputFile) ;
     }) ;
+
+    function addFinishLoadingFileEvent(concatenatedResult) {
+        concatenatedResult += "\n\n" + "var _aggzevent = new Event('APP_READY'); \n" ;
+        concatenatedResult += "window.document.dispatchEvent(_aggzevent);" ;
+        return concatenatedResult ;
+    } ;
 
     function getFileContentsAccordingToGraph(fileListToReadAndConcat) {
         var result = "" ;
