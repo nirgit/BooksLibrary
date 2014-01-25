@@ -18,7 +18,7 @@ define.Class("views.BookView", function(def) {
             ]
         ],
         methods: {
-            __init: function() {
+            $init: function() {
                 this._createBookStyle() ;
             },
 

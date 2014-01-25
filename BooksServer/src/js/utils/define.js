@@ -98,9 +98,9 @@ window.define = (function() {
 
             $Class.prototype = classPrototype ;
             // in case there is a static Init
-            if(classObj && classObj.statics && classObj.statics.methods && classObj.statics.methods["__init"]) {
-                var staticInit = classObj.statics.methods["__init"] ;
-                staticInit.apply(classObj) ;
+            if(classObj && classObj.statics && classObj.statics.methods && classObj.statics.methods["$init"]) {
+                var staticInit = classObj.statics.methods["$init"] ;
+                staticInit.apply(classPrototype) ;
             }
             return $Class ;
         },
@@ -143,11 +143,8 @@ window.define = (function() {
             var staticMethods = classDef.statics.methods ;
             if(staticMethods) {
                 for(var methodName in staticMethods) {
-                    var staticFunction              = staticMethods[methodName] ;
-                    if(staticFunction) {
-                        staticFunction = staticFunction.bind(classPrototype) ;
-                    }
-                    classPrototype[methodName] = staticFunction ;
+                    classPrototype[methodName]              = staticMethods[methodName] ;
+                    classPrototype[methodName].$methodName  = methodName ;
                 }
             }
         },
