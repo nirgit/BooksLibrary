@@ -130,6 +130,12 @@ window.define = (function() {
                 return;
             }
             // define the static fields.
+            this._addStaticFieldsToPrototype(classPrototype, classDef) ;
+            // define the static methods! - binding the methods to the class!
+            this._addStaticMethodsToPrototype(classPrototype, classDef) ;
+        },
+
+        _addStaticFieldsToPrototype: function(classPrototype, classDef) {
             var staticFields = classDef.statics.fields ;
             if(staticFields) {
                 for(var i=0; i < staticFields.length; i++) {
@@ -139,7 +145,9 @@ window.define = (function() {
                     }
                 }
             }
-            // define the static methods! - binding the methods to the class!
+        },
+
+        _addStaticMethodsToPrototype: function(classPrototype, classDef) {
             var staticMethods = classDef.statics.methods ;
             if(staticMethods) {
                 for(var methodName in staticMethods) {
