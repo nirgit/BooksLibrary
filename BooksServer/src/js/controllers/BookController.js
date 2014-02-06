@@ -6,7 +6,15 @@ define.Class("controllers.BookController", function(def) {
             this._bookModel = bookModel ;
             // Build View
             this._bindBookModelToView() ;
+            this._bindEvents(eventBus) ;
+        },
+
+        _bindEvents: function(eventBus) {
             eventBus.addListener("BOOKS_FILTER", this, this._filterHandler) ;
+
+            $(this._view.asElement()).on("click", function() {
+                console.log("You chose %s", this._bookModel.name) ;
+            }.bind(this)) ;
         },
 
         _filterHandler: function(eventName, data) {
