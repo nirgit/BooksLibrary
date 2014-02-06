@@ -1,8 +1,11 @@
 // Entry point of the app
 function init() {
-    var eventBus = new utils.EventBus() ;
-    var mainNode = document.getElementById("main") ;
-    var booksView = new views.BooksListView(mainNode) ;
+    var mainNode        = document.getElementById("main") ;
+    var dialogsNode     = document.getElementById("dialogs") ;
+
+    var eventBus        = new utils.EventBus() ;
+    var lendDialog      = new controllers.BookLendController(new views.BookLendView(dialogsNode), eventBus) ;
+    var booksView       = new views.BooksListView(mainNode) ;
     var booksController = new controllers.BooksListController(booksView, eventBus) ;
     booksController.showBooksList() ;
 } ;

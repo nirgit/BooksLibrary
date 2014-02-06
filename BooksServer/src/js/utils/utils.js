@@ -30,5 +30,9 @@
                 func() ;
             }
         }
-    }
+    } ;
+
+    utils.getScreenWidth = function getScreenWidth() {
+        return window.document.body.clientWidth ;
+    } ;
 })() ;

@@ -4,16 +4,17 @@ define.Class("controllers.BookController", function(def) {
         __init: function(bookView, bookModel, eventBus) {
             this._view      = bookView ;
             this._bookModel = bookModel ;
+            this._eventBus  = eventBus ;
             // Build View
             this._bindBookModelToView() ;
-            this._bindEvents(eventBus) ;
+            this._bindEvents() ;
         },
 
-        _bindEvents: function(eventBus) {
-            eventBus.addListener("BOOKS_FILTER", this, this._filterHandler) ;
+        _bindEvents: function() {
+            this._eventBus.addListener("BOOKS_FILTER", this, this._filterHandler) ;
 
             $(this._view.asElement()).on("click", function() {
-                console.log("You chose %s", this._bookModel.name) ;
+                this._eventBus.fireEvent("SHOW_LEND_DIALOG", {data: this._bookModel}) ;
             }.bind(this)) ;
         },
 
