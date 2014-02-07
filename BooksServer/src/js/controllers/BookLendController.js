@@ -20,14 +20,13 @@ define.Class("controllers.BookLendController", function(def) {
 
         show: function(eventName, eventData) {
             this._calcPosition() ;
-            this._view.asElement().style.display = "block" ;
+            this._view.asElement().className = "" ;
             if(eventData) {
                 this._updateViewWithData(eventData.data);
             }
         },
 
         _updateViewWithData: function(data) {
-            console.log("eventData = ", JSON.stringify(data)) ;
             if(data) {
                 this._view.getTitle().innerHTML = data.name ;
                 this._view.getAuthor().innerHTML = data.author ;
@@ -37,7 +36,7 @@ define.Class("controllers.BookLendController", function(def) {
         },
 
         _calcPosition: function() {
-            this._view.asElement().style.left = (utils.getScreenWidth() - this._getWidth()) / 2 + "px" ;
+            this._view.getContainer().style.left = (utils.getScreenWidth() - this._getWidth()) / 2 + "px" ;
         },
 
         _getWidth: function() {
@@ -45,7 +44,7 @@ define.Class("controllers.BookLendController", function(def) {
         },
 
         hide: function() {
-            this._view.asElement().style.display = "none" ;
+            this._view.asElement().className = "hidden" ;
         }
     }
 }) ;

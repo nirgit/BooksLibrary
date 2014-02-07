@@ -18,7 +18,9 @@ define.Class("views.BookLendView", function(def) {
                         'BOOK-LEND_TITLE':  ".book-lend-title { color: cadetblue; font-family: sans-serif; font-size: 22px; font-weight: lighter;" +
                                             "margin: 5px; text-align: center; word-wrap: break-word; height: 50px}",
                         'BOOK-LEND_YEAR':   ".book-lend-year {font-size: 16px; font-family: serif;}",
-                        'BOOK-LEND_OWNER':  ".book-lend-owner {font-size: 14px; position: relative; top: 20%}"
+                        'BOOK-LEND_OWNER':  ".book-lend-owner {font-size: 14px; position: relative; top: 20%}",
+                        'BOOK-LEND_CONTROL':".book-lend-control {position: absolute; bottom: 10px; right:0}",
+                        'BOOK-LEND_BUTTON': ".book-lend-button {float: left; margin-right: 5px; margin-left: 5px;}"
                      }
             ],
             ["$skin", null],
@@ -57,9 +59,9 @@ define.Class("views.BookLendView", function(def) {
                                         "<div part='bookYear' class='book-lend-year'>1999</div>" +
                                         "<div part='bookOwner' class='book-lend-owner'>Alice</div>" +
                                     "</div>" +
-                                    "<div part='dialogControls'>" +
-                                        "<div part='cancelButton' class='button'>Cancel</div>" +
-                                        "<div part='okButton' class='button'>Ok</div>" +
+                                    "<div part='dialogControls' class='book-lend-control'>" +
+                                        "<div part='cancelButton' class='button book-lend-button'>Cancel</div>" +
+                                        "<div part='okButton' class='button book-lend-button'>Ok</div>" +
                                     "</div>" ;
                 container.innerHTML = skinBody ;
                 return container ;
@@ -97,7 +99,7 @@ define.Class("views.BookLendView", function(def) {
             return this._getPart(this.PARTS.CANCEL) ;
         },
 
-        asElement: function() {
+        getContainer: function() {
             return this._getPart("container") ;
         },
 
