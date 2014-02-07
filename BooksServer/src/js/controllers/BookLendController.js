@@ -18,9 +18,22 @@ define.Class("controllers.BookLendController", function(def) {
             $(this._view.getCancel()).on("click", this.hide.bind(this)) ;
         },
 
-        show: function() {
+        show: function(eventName, eventData) {
             this._calcPosition() ;
             this._view.asElement().style.display = "block" ;
+            if(eventData) {
+                this._updateViewWithData(eventData.data);
+            }
+        },
+
+        _updateViewWithData: function(data) {
+            console.log("eventData = ", JSON.stringify(data)) ;
+            if(data) {
+                this._view.getTitle().innerHTML = data.name ;
+                this._view.getAuthor().innerHTML = data.author ;
+                this._view.getYear().innerHTML = data.year ;
+                this._view.getOwner().innerHTML = data.owner.name ;
+            }
         },
 
         _calcPosition: function() {
@@ -28,7 +41,6 @@ define.Class("controllers.BookLendController", function(def) {
         },
 
         _getWidth: function() {
-//            return this._view.asElement().offsetWidth ;
             return this._view.getWidth() ;
         },
 

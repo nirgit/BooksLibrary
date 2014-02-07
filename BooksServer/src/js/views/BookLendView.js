@@ -58,8 +58,8 @@ define.Class("views.BookLendView", function(def) {
                                         "<div part='bookOwner' class='book-lend-owner'>Alice</div>" +
                                     "</div>" +
                                     "<div part='dialogControls'>" +
-                                        "<div part='cancelButton'>Cancel</div>" +
-                                        "<div part='okButton'>Ok</div>" +
+                                        "<div part='cancelButton' class='button'>Cancel</div>" +
+                                        "<div part='okButton' class='button'>Ok</div>" +
                                     "</div>" ;
                 container.innerHTML = skinBody ;
                 return container ;
