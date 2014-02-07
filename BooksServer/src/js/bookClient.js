@@ -1,6 +1,6 @@
 // Entry point of the app
 function init() {
-    var mainNode        = document.getElementById("main") ;
+    var mainNode        = document.getElementById("content") ;
     var dialogsNode     = document.getElementById("dialogs") ;
 
     var eventBus        = new utils.EventBus() ;

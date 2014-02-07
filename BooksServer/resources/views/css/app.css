@@ -20,10 +20,13 @@ body {
     border: 2px darkgray solid ;
     box-shadow: 5px 5px 5px rgba(0,0,0,0.5) ;
     width: 80px ;
-    background-color: silver ;
+    background-color: rgba(235,235,235,1) ;
     padding: 2px ;
+    color: black ;
 }
 
 .button:HOVER {
-
+    background-color: rgb(49, 86, 133) ;
+    cursor: pointer ;
+    color: white ;
 }

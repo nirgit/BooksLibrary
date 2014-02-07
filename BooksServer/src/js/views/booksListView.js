@@ -2,6 +2,26 @@ define.Class("views.BooksListView", function(def) {
 
     def.extends = "views.BaseView" ;
 
+    def.statics = {
+        fields: [
+            ["STYLES", {
+                "BOOK_SEARCH": ".bookSearchContainer {margin-bottom: 10px; background: bisque; height: 30px; width: 230px; padding: 10px;}"
+            }]
+        ],
+
+        methods: {
+            $init: function() {
+                this._initStyles() ;
+            },
+
+            _initStyles: function() {
+                var style = new Element("style") ;
+                style.innerHTML += this.STYLES.BOOK_SEARCH ;
+                document.head.appendChild(style) ;
+            }
+        }
+    } ;
+
     def.methods = {
         __init: function(node, args) {
             this.super(node, args) ;
@@ -29,9 +49,9 @@ define.Class("views.BooksListView", function(def) {
         },
 
         _createSearch: function() {
-            var searchHTMLFragment = '<div id="bookSearch">' +
+            var searchHTMLFragment = '<div id="bookSearch" class="bookSearchContainer">' +
+                '<span id="searchTitle">Search:</span>' +
                 '<input id="bookNameToSearch" type="text" placeholder="Enter a book name..." maxlength="100"/>' +
-                '<span id="searchButton" class="button">Search!</span>' +
                 '</div>';
             var searchContainer = new Element("div") ;
             searchContainer.innerHTML = searchHTMLFragment ;
