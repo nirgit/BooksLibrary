@@ -11,7 +11,7 @@ define.Class("views.BookView", function(def) {
             ['CLASS_OWNER_SUB_STYLE_NAME', "owner"],
             ['STYLES', {
                         'BOOK':         ".book {background: url(imgs/book.jpg) 214px 266px; color: white; float: left; font-family: sans-serif;" +
-                                        "font-size: 20px; height: 250px; width: 190px; margin: 10px; text-align: center; word-wrap: break-word;" +
+                                        "font-size: 20px; height: 250px; width: 190px; margin: 40px; text-align: center; word-wrap: break-word;" +
                                         "box-shadow: 5px 5px 15px 2px gray;}",
                         'BOOK_TITLE':   ".book-title { color: cadetblue; font-family: sans-serif; font-size: 22px; font-weight: lighter;" +
                                         "margin: 5px; text-align: center; word-wrap: break-word; height: 50px}",
