@@ -35,7 +35,7 @@ module.exports = function(grunt) {
 
         aggregizer: {
             path: ["src/js"],
-            orderedFiles: ["loader.js", "define.js", "domUtils.js", "utils.js"],
+            orderedFiles: ["loader.js", "define.js", "domUtils.js", "utils.js", "authentication.js"],
             outputFile: "./resources/views/app.js"
         },
 

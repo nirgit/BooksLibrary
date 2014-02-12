@@ -1,5 +1,9 @@
 // Entry point of the app
 function init() {
+    var authentication  = new auth.Authentication() ;
+    window.app          = window.app || {} ;
+    window.app['auth']  = window.app['auth'] || authentication ;
+
     var mainNode        = document.getElementById("content") ;
     var dialogsNode     = document.getElementById("dialogs") ;
     var toolbarNode     = document.getElementById("mainToolbar") ;

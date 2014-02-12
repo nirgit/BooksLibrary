@@ -5,83 +5,23 @@
         <script src="lib/jquery-2.0.3.min.js"></script>
         <link rel="stylesheet" href="css/app.css">
         <script>
-            var app = document.createElement("script") ;
-            if(window.location.search.indexOf("debug=true") >= 0) {
-                app.src = "app.js" ;
-            } else {
-                app.src = "app.min.js" ;
-            }
-            document.head.appendChild(app) ;
-        </script>
-
-        <script>
-            function signinCallback(authResult) {
-              if (authResult['status']['signed_in']) {
-                console.log('Logged in Successfully');
-                // Update the app to reflect a signed in user
-                // Hide the sign-in button now that the user is authorized, for example:
-                document.getElementById('signinButton').setAttribute('style', 'display: none');
-                document.getElementById('logoutButton').className = "" ;
-                getUserProfile() ;
-              } else {
-                // Update the app to reflect a signed out user
-                // Possible error values:
-                //   "user_signed_out" - User is signed-out
-                //   "access_denied" - User denied access to your app
-                //   "immediate_failed" - Could not automatically log in the user
-                console.log('Sign-in state: ' + authResult['error']);
-              }
-            }
-
-            function getUserProfile() {
-                gapi.client.load('plus','v1', function(){
-                 var request = gapi.client.plus.people.get({
-                   'userId': 'me'
-                 });
-                 request.execute(function(resp) {
-                   console.log('Retrieved profile for:' + resp.displayName);
-                   document.getElementById("logoutButton").innerHTML += " " + resp.displayName ;
-                 });
-                });
-            }
-        </script>
-
-        <script type="text/javascript">
-            function disconnectUser(access_token) {
-              var revokeUrl = 'https://accounts.google.com/o/oauth2/revoke?token=' +
-                  access_token;
-
-              // Perform an asynchronous GET request.
-              $.ajax({
-                type: 'GET',
-                url: revokeUrl,
-                async: false,
-                contentType: "application/json",
-                dataType: 'jsonp',
-                success: function(nullResponse) {
-                  // Do something now that user is disconnected
-                  // The response is always undefined.
-                    document.getElementById('signinButton').setAttribute('style', 'display: block');
-                    document.getElementById('logoutButton').className = "hidden" ;
-                    document.getElementById('logoutButton').innerHTML = "Logout" ;
-                },
-                error: function(e) {
-                  // Handle the error
-                  console.log(e);
-                  // You could point users to manually disconnect if unsuccessful
-                  // https://plus.google.com/apps
+            (function init() {
+                var app = document.createElement("script") ;
+                if(window.location.search.indexOf("debug=true") >= 0) {
+                    app.src = "app.js" ;
+                } else {
+                    app.src = "app.min.js" ;
                 }
-              });
-            }
+                document.head.appendChild(app) ;
+            })() ;
         </script>
-
     </head>
 <body>
     <div id="login">
             <span id="signinButton">
               <span
                       class="g-signin"
-                      data-callback="signinCallback"
+                      data-callback="app.auth.signinCallback"
                       data-clientid="941749687344-4okcp9qcufe6gsiucekm7qqfmfljk545.apps.googleusercontent.com"
                       data-cookiepolicy="single_host_origin"
                       data-requestvisibleactions="http://schemas.google.com/AddActivity"
@@ -111,8 +51,12 @@
            var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
          })();
 
+         function $disconnect() {
+            return app.auth.disconnectUser() ;
+         }
+
         // Could trigger the disconnect on a button click
-        $('#logoutButton').click(disconnectUser);
+        $('#logoutButton').click($disconnect);
     </script>
 </body>
 </html>
