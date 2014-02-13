@@ -14,6 +14,10 @@
                 }
                 document.head.appendChild(app) ;
             })() ;
+
+            function signInCB(result) {
+                return app.auth.signinCallback(result) ;
+            }
         </script>
     </head>
 <body>
@@ -21,7 +25,7 @@
             <span id="signinButton">
               <span
                       class="g-signin"
-                      data-callback="app.auth.signinCallback"
+                      data-callback="signInCB"
                       data-clientid="941749687344-4okcp9qcufe6gsiucekm7qqfmfljk545.apps.googleusercontent.com"
                       data-cookiepolicy="single_host_origin"
                       data-requestvisibleactions="http://schemas.google.com/AddActivity"
@@ -42,21 +46,5 @@
         <div class="veil"></div>
     </div>
 
-
-    <!-- Place this asynchronous JavaScript just before your </body> tag -->
-    <script type="text/javascript">
-          (function() {
-           var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
-           po.src = 'https://apis.google.com/js/client:plusone.js';
-           var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
-         })();
-
-         function $disconnect() {
-            return app.auth.disconnectUser() ;
-         }
-
-        // Could trigger the disconnect on a button click
-        $('#logoutButton').click($disconnect);
-    </script>
 </body>
 </html>

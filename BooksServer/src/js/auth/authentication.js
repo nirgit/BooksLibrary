@@ -1,7 +1,20 @@
 define.Class("auth.Authentication", function(def) {
 
     def.methods = {
-        __init: function() {
+        __init: function(eventBus) {
+            eventBus.addListener("DOM_FINISHED_LOADING", this, this._initAuthenticationElements) ;
+        },
+
+        _initAuthenticationElements: function() {
+            // TODO NMO 2/13/14 11:22 PM - to be moved to the Authentication Toolbar.
+            $('#logoutButton').click(this.disconnectUser);
+            this._initGooglePlusOneScript() ;
+        },
+
+        _initGooglePlusOneScript: function() {
+            var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
+            po.src = 'https://apis.google.com/js/client:plusone.js';
+            var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
         },
 
         signinCallback: function(authResult) {

@@ -1,6 +1,10 @@
 // Entry point of the app
 function init() {
-    var authentication  = new auth.Authentication() ;
+    var eventBus        = new utils.EventBus() ;
+    var authentication  = new auth.Authentication(eventBus) ;
+
+    eventBus.fireEvent("DOM_FINISHED_LOADING", null) ;
+
     window.app          = window.app || {} ;
     window.app['auth']  = window.app['auth'] || authentication ;
 
@@ -8,7 +12,7 @@ function init() {
     var dialogsNode     = document.getElementById("dialogs") ;
     var toolbarNode     = document.getElementById("mainToolbar") ;
 
-    var eventBus        = new utils.EventBus() ;
+
     var lendDialog      = new controllers.BookLendController(new views.BookLendView(dialogsNode), eventBus) ;
     var toolbar         = new views.MainToolbarView(toolbarNode) ;
     var booksView       = new views.BooksListView(mainNode) ;
