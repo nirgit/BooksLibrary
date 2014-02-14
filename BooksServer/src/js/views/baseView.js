@@ -14,6 +14,10 @@ define.Class("views.BaseView", function(def) {
             this._render(this._node) ;
         },
 
+        _getPart: function(partName) {
+            return this._node.querySelector("[part=" + partName + "]") ;
+        },
+
         asElement: function() {
             return this._node ;
         },
