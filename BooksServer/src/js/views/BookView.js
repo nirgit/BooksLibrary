@@ -90,10 +90,6 @@ define.Class("views.BookView", function(def) {
             return this._getPart(this.PARTS.OWNER) ;
         },
 
-//        _getPart: function(partName) {
-//            return this._node.querySelector("[part=" + partName + "]") ;
-//        },
-
         _render: function(node) {
             var bookSkinInstance = this.$skin.cloneNode(true) ;
             node.appendChild(bookSkinInstance) ;

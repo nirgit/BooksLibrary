@@ -103,10 +103,6 @@ define.Class("views.BookLendView", function(def) {
             return this._getPart("container") ;
         },
 
-//        _getPart: function(partName) {
-//            return this._node.querySelector("[part=" + partName + "]") ;
-//        },
-
         _render: function(node) {
             var bookLendDialog = this.$skin.cloneNode(true) ;
             node.appendChild(bookLendDialog) ;
