@@ -10,8 +10,8 @@ define.Class("views.BaseView", function(def) {
             this._args = args ;
         },
 
-        go: function() {
-            this._render(this._node) ;
+        go: function(args) {
+            this._render(this._node, args) ;
         },
 
         _getPart: function(partName) {

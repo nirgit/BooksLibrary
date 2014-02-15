@@ -44,7 +44,7 @@ define.Class("views.LoginBarView", function(def) {
                                         '</span>' +
                                      '</span>' +
 
-                                     '<a id="logoutButton" part="logoutButton" href="#" class="hidden">Logout</a>' ;
+                                     '<a id="logoutButton" part="logoutButton" href="#">Logout</a>' ;
                 container.innerHTML = skinBody ;
                 return container ;
             }
@@ -54,7 +54,8 @@ define.Class("views.LoginBarView", function(def) {
     def.methods = {
         __init: function(node, args) {
             this.super(node, args) ;
-            this.go() ;
+            var skinInstance = this.$skin.cloneNode(true) ;
+            this.go(skinInstance) ;
         },
 
         getCancel: function() {
@@ -65,8 +66,7 @@ define.Class("views.LoginBarView", function(def) {
             return this._getPart(this.PARTS.LOGOUT_BUTTON) ;
         },
 
-        _render: function(node) {
-            var skinInstance = this.$skin.cloneNode(true) ;
+        _render: function(node, skinInstance) {
             node.appendChild(skinInstance) ;
         }
     }
