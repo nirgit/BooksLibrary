@@ -8,17 +8,10 @@ function init() {
     window.app          = window.app || {} ;
     window.app['auth']  = window.app['auth'] || authentication ;
 
-    var mainNode        = document.getElementById("content") ;
-    var dialogsNode     = document.getElementById("dialogs") ;
-    var toolbarNode     = document.getElementById("mainToolbar") ;
-    var loginBarNode    = document.getElementById("login") ;
-
-    var loginBar        = new views.LoginBarView(loginBarNode) ;
-    var lendDialog      = new controllers.BookLendController(new views.BookLendView(dialogsNode), eventBus) ;
-    var toolbar         = new views.MainToolbarView(toolbarNode) ;
-    var booksView       = new views.BooksListView(mainNode) ;
-    var booksController = new controllers.BooksListController(booksView, eventBus) ;
-    booksController.showBooksList() ;
+    var mainHook    = document.getElementById("main") ;
+    var appView     = new views.AppView(mainHook) ;
+    var appCtrlr    = new controllers.AppController(eventBus, appView) ;
+    appCtrlr.go() ;
 } ;
 
 window.document.addEventListener("APP_READY", init.bind(window), false) ;

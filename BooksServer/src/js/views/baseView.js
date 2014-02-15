@@ -10,8 +10,15 @@ define.Class("views.BaseView", function(def) {
             this._args = args ;
         },
 
-        go: function(args) {
-            this._render(this._node, args) ;
+        go: function(view, args) {
+            if(!view && !this._node) {
+                return ;
+            }
+            if(!this._node) {
+                this._node = view ;
+            }
+            var node = view || this._node ;
+            this._render(node, args) ;
         },
 
         _getPart: function(partName) {
@@ -23,7 +30,7 @@ define.Class("views.BaseView", function(def) {
         },
 
         // MUST be overriden in sub-classes.
-        _render: function(view) {
+        _render: function(view, args) {
             // TODO NMO 12/28/13 10:15 PM - this is an abstract implementation that does nothing.
         }
     } ;

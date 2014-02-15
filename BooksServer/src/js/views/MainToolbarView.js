@@ -41,7 +41,6 @@ define.Class("views.MainToolbarView", function(def) {
         __init: function(node, args) {
             this.super(node, args) ;
             this._toolbarSkin = this.$skin.cloneNode(true) ;
-            this.go() ;
         },
 
         // MUST be overriden in sub-classes.

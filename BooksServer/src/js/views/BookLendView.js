@@ -72,7 +72,7 @@ define.Class("views.BookLendView", function(def) {
     def.methods = {
         __init: function(node, args) {
             this.super(node, args) ;
-            this.go() ;
+            this._skinInstance = this.$skin.cloneNode(true) ;
         },
 
         getWidth: function() {
@@ -104,8 +104,7 @@ define.Class("views.BookLendView", function(def) {
         },
 
         _render: function(node) {
-            var bookLendDialog = this.$skin.cloneNode(true) ;
-            node.appendChild(bookLendDialog) ;
+            node.appendChild(this._skinInstance) ;
         }
     }
 }) ;
