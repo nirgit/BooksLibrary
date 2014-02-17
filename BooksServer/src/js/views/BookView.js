@@ -16,11 +16,13 @@ define.Class("views.BookView", function(def) {
                         'BOOK_TITLE':   ".book-title { color: cadetblue; font-family: sans-serif; font-size: 22px; font-weight: lighter;" +
                                         "margin: 5px; text-align: center; word-wrap: break-word; height: 50px}",
                         'BOOK_YEAR':    ".book-year {font-size: 16px; font-family: serif;}",
-                        'BOOK_OWNER':   ".book-owner {font-size: 14px; position: relative; top: 20%}"
+                        'BOOK_OWNER':   ".book-owner {font-size: 14px; position: relative; top: 20%}",
+                        'BOOK_HOVER':   ".bookHover {box-shadow: 0px 0px 40px 10px white;}"
                      }
             ],
             ["$skin", null],
             ['PARTS', {
+                        CONTAINER: "bookContainer",
                         TITLE: "title",
                         AUTHOR: "author",
                         YEAR: "year",
@@ -35,17 +37,14 @@ define.Class("views.BookView", function(def) {
 
             _createBookStyle: function() {
                 var style = new Element("style") ;
-                style.innerHTML += this.STYLES.BOOK ;
-                style.innerHTML += this.STYLES.BOOK_TITLE ;
-                style.innerHTML += this.STYLES.BOOK_YEAR ;
-                style.innerHTML += this.STYLES.BOOK_OWNER ;
-
+                for(var s in this.STYLES) {
+                    style.innerHTML += this.STYLES[s] ;
+                }
                 document.head.appendChild(style) ;
             },
 
             _createSkin: function() {
-                var bookContainer       = new Element("div") ;
-                bookContainer.className = this.CLASS_STYLE_NAME ;
+                var bookContainer     = this._createBookHeader(this.PARTS.CONTAINER) ;
                 var title             = this._createBookHeader(this.PARTS.TITLE, this.CLASS_TITLE_SUB_STYLE_NAME) ;
                 var author            = this._createBookHeader(this.PARTS.AUTHOR, this.CLASS_AUTHOR_SUB_STYLE_NAME) ;
                 var year              = this._createBookHeader(this.PARTS.YEAR, this.CLASS_YEAR_SUB_STYLE_NAME) ;
@@ -72,6 +71,10 @@ define.Class("views.BookView", function(def) {
         __init: function(node, args) {
             this.super(node, args) ;
             this.go() ;
+        },
+
+        getContainer: function() {
+            return this._getPart(this.PARTS.CONTAINER) ;
         },
 
         getTitle: function() {
