@@ -1,4 +1,4 @@
-define.Class("controllers.BookLendDialogController", function(def) {
+define.Class("controllers.dialogs.BookLendDialogController", function(def) {
 
     def.methods = {
         __init: function(dialogView, eventBus) {

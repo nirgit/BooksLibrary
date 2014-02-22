@@ -1,4 +1,4 @@
-define.Class("views.BookLendView", function(def) {
+define.Class("views.dialogs.BookLendView", function(def) {
 
     def.extends = "views.BaseView" ;
 
@@ -54,10 +54,10 @@ define.Class("views.BookLendView", function(def) {
                 var skinBody        = "" +
                                     "<div part='dialogTitle'>Lend a book</div>" +
                                     "<div part='dialogBody'>" +
-                                        "<div part='bookTitle' class='book-lend-title'>mock title</div>" +
-                                        "<div part='bookAuthor' class='book-lend-author'>mock author john doe</div>" +
-                                        "<div part='bookYear' class='book-lend-year'>1999</div>" +
-                                        "<div part='bookOwner' class='book-lend-owner'>Alice</div>" +
+                                        "<div part='bookTitle' class='book-lend-title'></div>" +
+                                        "<div part='bookAuthor' class='book-lend-author'></div>" +
+                                        "<div part='bookYear' class='book-lend-year'></div>" +
+                                        "<div part='bookOwner' class='book-lend-owner'></div>" +
                                     "</div>" +
                                     "<div part='dialogControls' class='book-lend-control'>" +
                                         "<div part='cancelButton' class='button book-lend-button'>Cancel</div>" +

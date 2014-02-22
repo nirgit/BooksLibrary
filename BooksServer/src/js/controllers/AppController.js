@@ -14,7 +14,7 @@ define.Class("controllers.AppController", function(def) {
 
         _createContent: function() {
             var dialogsView = this._view.getDialogView() ;
-            this._bookLendDialog = new controllers.BookLendDialogController(dialogsView, this._eventBus) ;
+            this._bookLendDialog = new controllers.dialogs.BookLendDialogController(dialogsView, this._eventBus) ;
 
             var booksListView = this._view.getBooksView() ;
             this._booksListController = new controllers.BooksListController(booksListView, this._eventBus) ;

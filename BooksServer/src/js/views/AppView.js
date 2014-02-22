@@ -15,8 +15,6 @@ define.Class("views.AppView", function(def) {
             _createSkin: function() {
                 var container = new Element("div") ;
                 var content = '' +
-                    '<h1>List of all available books</h1>' +
-
                     '<div part="mainToolbar">' +
                         '<div part="login"></div>' +
                     '</div>' +
@@ -41,7 +39,7 @@ define.Class("views.AppView", function(def) {
                 MAIN_TOOLBAR:   new views.MainToolbarView(),
                 LOGIN_BAR:      new views.LoginBarView(),
                 BOOKS_VIEW:     new views.BooksListView(),
-                LEND_DIALOG:    new views.BookLendView()
+                LEND_DIALOG:    new views.dialogs.BookLendView()
             } ;
         },
 
