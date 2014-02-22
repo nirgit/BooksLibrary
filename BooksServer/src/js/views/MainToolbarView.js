@@ -5,7 +5,8 @@ define.Class("views.MainToolbarView", function(def) {
     def.statics = {
         fields: [
             ["STYLES", {
-
+                "TOOLBAR_BUTTON": ".toolbar-button {float: left; text-align: center; font-weight: bold; margin-right: 2px}",
+                "SELECTED_ITEM": ".toolbar-selected-item {background-color: blueviolet; color: white}"
             }]
         ],
 
@@ -28,9 +29,9 @@ define.Class("views.MainToolbarView", function(def) {
                 container.className = 'main-toolbar' ;
                 container.setAttribute("part", "container") ;
                 var skinBody        = "" +
-                                    "<div part='availableBooks' class='button'>Books</div>" +
-                                    "<div part='myBooks' class='button'>Lends</div>" +
-                                    "<div part='profile' class='button'>Profile</div>" ;
+                                    "<div part='availableBooks' class='button toolbar-button'>Books</div>" +
+                                    "<div part='myBooks' class='button toolbar-button'>Lends</div>" +
+                                    "<div part='profile' class='button toolbar-button'>Profile</div>" ;
                 container.innerHTML = skinBody ;
                 return container ;
             }

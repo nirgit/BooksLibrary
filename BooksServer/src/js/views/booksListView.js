@@ -5,7 +5,7 @@ define.Class("views.BooksListView", function(def) {
     def.statics = {
         fields: [
             ["STYLES", {
-                "BOOK_SEARCH": ".bookSearchContainer {margin-bottom: 10px; background: bisque; height: 30px; width: 230px; padding: 10px;}"
+                "BOOK_SEARCH": ".bookSearchContainer {margin-bottom: 10px; margin-top: 40px; background: bisque; width: 230px; padding: 10px;}"
             }]
         ],
 
@@ -37,15 +37,8 @@ define.Class("views.BooksListView", function(def) {
         },
 
         _createViewElements: function(){
-            this._title     = this._createTitle() ;
             this._search    = this._createSearch() ;
             this._bookList  = this._createBookList() ;
-        },
-
-        _createTitle: function() {
-            var title = new Element("div") ;
-            title.innerHTML = "Library Books" ;
-            return title ;
         },
 
         _createSearch: function() {
@@ -64,7 +57,6 @@ define.Class("views.BooksListView", function(def) {
         },
 
         _render: function(view) {
-            view.appendChild(this._title) ;
             view.appendChild(this._search) ;
             view.appendChild(this._bookList) ;
         }
