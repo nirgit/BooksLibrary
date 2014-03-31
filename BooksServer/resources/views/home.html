@@ -1,9 +1,8 @@
 <!DOCTYPE html>
-<html>
+<html ng-app="bookapp">
     <head>
         <title>Book library</title>
         <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.14/angular.min.js"></script>
-        <script src="lib/jquery-2.0.3.min.js"></script>
         <link rel="stylesheet" href="css/app.css">
         <script>
             (function init() {
@@ -22,6 +21,16 @@
         </script>
     </head>
 <body>
-    <div id="main"></div>
+    <div id="main" ng-controller="myCtrlr">
+        {{myName}}
+    </div>
+
+    <script>
+        var app = window.angular.module("bookapp", []) ;
+        app.controller('myCtrlr', function($scope) {
+            $scope.myName = "Nir" ;
+        }) ;
+    </script>
+
 </body>
 </html>
