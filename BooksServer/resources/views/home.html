@@ -3,6 +3,7 @@
     <head>
         <title>Book library</title>
         <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.14/angular.min.js"></script>
+        <script src="lib/angular-route.min.js"></script>
         <link rel="stylesheet" href="css/app.css">
         <script>
             (function init() {
@@ -21,16 +22,15 @@
         </script>
     </head>
 <body>
-    <div id="main" ng-controller="myCtrlr">
-        {{myName}}
-    </div>
+    <div id="main" ng-view></div>
 
     <script>
-        var app = window.angular.module("bookapp", []) ;
-        app.controller('myCtrlr', function($scope) {
-            $scope.myName = "Nir" ;
-        }) ;
+        var app = window.angular.module("bookapp", ['ngRoute']) ;
+        window.getApp = function() {
+            return app ;
+        }
     </script>
 
+    <script src="app.js"></script>
 </body>
 </html>
