@@ -22,7 +22,11 @@
         </script>
     </head>
 <body>
-    <div id="main" ng-view></div>
+
+    <div id="main">
+        <libraryheader></libraryheader>
+        <div id="page" ng-view></div>
+    </div>
 
     <script>
         var app = window.angular.module("bookapp", ['ngRoute']) ;
