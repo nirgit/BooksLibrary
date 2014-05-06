@@ -30,7 +30,7 @@ module.exports = function(grunt) {
 
         watch: {
           files: '<%= jshint.src %>',
-          tasks: ['jshint']
+          tasks: ['default']
         },
 
         aggregizer: {
@@ -51,6 +51,7 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-contrib-concat');
     grunt.loadNpmTasks('grunt-contrib-jshint');
     grunt.loadNpmTasks('grunt-contrib-uglify');
+    grunt.loadNpmTasks('grunt-contrib-watch');
 
     // Custom tasks (local plugin)
     grunt.loadNpmTasks('grunt-aggregizer');
