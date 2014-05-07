@@ -10,6 +10,20 @@ body {
     color: white;
 }
 
+#libraryTitle {
+    color: navy;
+    display: inline-block;
+    font-family: cursive;
+    font-size: 12px;
+    float: left;
+    border-radius: 100%;
+    border: white solid 2px;
+    overflow: hidden;
+    width: 40px;
+    height: 40px;
+    text-align: center;
+}
+
 .veil {
     position: fixed ;
     width: 100% ;
@@ -37,4 +51,25 @@ body {
     background-color: rgb(49, 86, 133) ;
     cursor: pointer ;
     color: white ;
+}
+
+.menuContainer {
+    width: 100%;
+}
+
+.menuItem {
+    display: inline-block;
+    margin: 0 5px 0 5px;
+    height: 35px;
+    font-family: cursive;
+    font-size: 24px;
+    border: 3px solid white;
+    padding: 0 5px 0 5px;
+    background-color: rgb(100,100,225);
+    border-radius: 8px;
+}
+
+.menuItem:HOVER {
+    background-color: rgb(225,100,100);
+    cursor: pointer;
 }
