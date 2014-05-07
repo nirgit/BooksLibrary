@@ -6,6 +6,10 @@ body {
     background-position: 50% 0%;
 }
 
+#header {
+    color: white;
+}
+
 .veil {
     position: fixed ;
     width: 100% ;

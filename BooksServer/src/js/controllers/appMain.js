@@ -13,3 +13,8 @@ getApp().
 getApp().controller('myCtrlr', function($scope) {
     $scope.myName = "Nir M." ;
 }) ;
+
+
+getApp().controller('headerController', ['$scope', function($scope) {
+    $scope.data = "Header Menu Items" ;
+}]) ;
