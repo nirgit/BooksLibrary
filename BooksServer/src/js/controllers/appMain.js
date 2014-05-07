@@ -16,5 +16,5 @@ getApp().controller('myCtrlr', function($scope) {
 
 
 getApp().controller('headerController', ['$scope', function($scope) {
-    $scope.data = "Header Menu Items" ;
+    $scope.pages = ['Library', 'Profile', 'Settings'] ;
 }]) ;
