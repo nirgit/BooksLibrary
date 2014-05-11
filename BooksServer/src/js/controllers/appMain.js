@@ -3,18 +3,9 @@ getApp().
     function($routeProvider) {
         $routeProvider.when('/', {
             templateUrl: 'partials/main.html',
-            controller: 'myCtrlr'
+            controller: 'mainController'
         }).
         otherwise({
             redirectTo: '/'
         })
     }]);
-
-getApp().controller('myCtrlr', function($scope) {
-    $scope.myName = "Nir M." ;
-}) ;
-
-
-getApp().controller('headerController', ['$scope', function($scope) {
-    $scope.pages = ['Library', 'Profile', 'Settings'] ;
-}]) ;
