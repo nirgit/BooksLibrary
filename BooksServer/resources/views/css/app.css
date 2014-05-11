@@ -11,6 +11,8 @@ body {
 }
 
 #libraryTitle {
+    background-image: url('../imgs/schnappi.bmp');
+    background-size: 100%;
     color: navy;
     display: inline-block;
     font-family: cursive;
