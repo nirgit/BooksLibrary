@@ -1,5 +1,5 @@
-<div class="menuContainer">
+<div class="menuContainer" ng-controller="menuController">
     <div ng-repeat="item in menuitems" class="menuItem">
-        {{ item }}
+        <a ng-href="{{ item.link }}">{{ item.name }}</a>
     </div>
 </div>

@@ -4,8 +4,17 @@ getApp().
         $routeProvider.when('/', {
             templateUrl: 'partials/main.html',
             controller: 'mainController'
-        }).
-        otherwise({
+        })
+        .when('/books', {
+            templateUrl: 'partials/books.html'
+        })
+        .when('/profile', {
+          templateUrl: 'partials/profile.html'
+        })
+        .when('/settings', {
+          templateUrl: 'partials/settings.html'
+        })
+        .otherwise({
             redirectTo: '/'
         })
     }]);
