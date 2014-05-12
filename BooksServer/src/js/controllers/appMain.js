@@ -2,10 +2,6 @@ getApp().
     config(['$routeProvider',
     function($routeProvider) {
         $routeProvider.when('/', {
-            templateUrl: 'partials/main.html',
-            controller: 'mainController'
-        })
-        .when('/books', {
             templateUrl: 'partials/books.html'
         })
         .when('/profile', {
