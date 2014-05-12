@@ -1,7 +1,26 @@
 <h1>Books view...</h1>
 <div>
-    <ul>
-        <li>Book 1</li>
-        <li>Book 2</li>
-    </ul>
+    <label>Book list</label>
+    <div>
+        <div ng-repeat="book in books">{{ book.name }} - {{ book.author }} / {{ book.year }}</div>
+    </div>
+</div>
+
+<div>
+    <label>Add book</label>
+
+    <div>
+        <div class="column">
+            <label>Book Name:</label><input type="text" ng-model="newBook.name"/>
+        </div>
+        <div class="column">
+            <label>Author:</label><input type="text" ng-model="newBook.author"/>
+        </div>
+        <div class="column">
+            <label>Publish Year:</label><input type="text" ng-model="newBook.year"/>
+        </div>
+        <div class="column">
+            <button ng-click="addBook()">Add</button>
+        </div>
+    </div>
 </div>
