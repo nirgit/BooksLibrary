@@ -2,14 +2,14 @@ getApp().
     config(['$routeProvider',
     function($routeProvider) {
         $routeProvider.when('/', {
-            templateUrl: 'partials/books.html',
+            templateUrl: 'partials/pages/books.html',
             controller: 'booksController'
         })
         .when('/profile', {
-          templateUrl: 'partials/profile.html'
+          templateUrl: 'partials/pages/profile.html'
         })
         .when('/settings', {
-          templateUrl: 'partials/settings.html'
+          templateUrl: 'partials/pages/settings.html'
         })
         .otherwise({
             redirectTo: '/'
