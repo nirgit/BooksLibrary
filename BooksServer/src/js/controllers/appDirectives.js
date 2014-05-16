@@ -1,14 +1,14 @@
 getApp().directive('libraryheader', function() {
         return {
             restrict: 'E',
-            templateUrl: 'partials/booksHeader.html'
+            templateUrl: 'partials/directives/booksHeader.html'
         }
     }) ;
 
 getApp().directive('librarymenu', function() {
     return {
         restrict: 'E',
-        templateUrl: 'partials/library-menu.html',
+        templateUrl: 'partials/directives/library-menu.html',
         scope: {
             menuitems: '=',
         }
