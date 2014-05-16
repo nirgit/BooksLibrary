@@ -2,9 +2,7 @@
     <h1>Books view...</h1>
     <div>
         <label>Book list</label>
-        <div>
-            <div ng-repeat="book in books">{{ book.name }} - {{ book.author }} / {{ book.year }}</div>
-        </div>
+        <book ng-repeat="b in books" book="b"></book>
     </div>
 
     <div>

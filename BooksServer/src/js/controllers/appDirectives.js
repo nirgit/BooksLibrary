@@ -10,7 +10,17 @@ getApp().directive('librarymenu', function() {
         restrict: 'E',
         templateUrl: 'partials/directives/library-menu.html',
         scope: {
-            menuitems: '=',
+            menuitems: '='
+        }
+    } ;
+}) ;
+
+getApp().directive('book', function() {
+    return {
+        restrict: 'E',
+        templateUrl: 'partials/directives/book.html',
+        scope: {
+            book: '='
         }
     } ;
 }) ;
