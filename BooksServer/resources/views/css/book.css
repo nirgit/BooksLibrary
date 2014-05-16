@@ -1,0 +1,16 @@
+.bookContainer {
+    width: 100% ;
+    max-height: 550px ;
+    overflow-y: scroll ;
+    margin-left: -5px ;
+}
+
+.book {
+    border: 2px solid silver ;
+    width: 150px ;
+    height: 180px ;
+    position: relative ;
+    background-color: rgba(190,156,110, 0.7) ;
+    float: left ;
+    margin: 5px 5px 0 5px ;
+}

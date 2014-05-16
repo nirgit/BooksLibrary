@@ -2,9 +2,11 @@
     <h1>Books view...</h1>
     <div>
         <label>Book list</label>
-        <book ng-repeat="b in books" book="b"></book>
+        <div class="bookContainer">
+            <book ng-repeat="b in books" book="b"></book>
+        </div>
     </div>
-
+    <br />
     <div>
         <label>Add a book</label>
 
