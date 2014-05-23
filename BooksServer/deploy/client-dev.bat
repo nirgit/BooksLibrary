@@ -1,4 +1,4 @@
 cd ..
-start grunt watch
+#start grunt watch
 cd resources
 python -m SimpleHTTPServer

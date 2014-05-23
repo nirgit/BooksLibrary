@@ -3,8 +3,18 @@ module.exports = function(grunt) {
     grunt.initConfig({
         pkg: grunt.file.readJSON('package.json'),
 
+        concat_css: {
+            options: {
+              // Task-specific options go here.
+            },
+            all: {
+              src: ["resources/**/*.css"],
+              dest: "./resources/views/css/appstyles.min.css"
+            },
+          },
+
         jshint: {
-              src: ['Gruntfile.js', 'src/js/**/*.js', 'resources/**/*.html'],
+              src: ['Gruntfile.js', 'src/js/**/*.js', 'resources/**/*.html', 'resources/**/*.css'],
               options: {
                 curly: true,
                 eqeqeq: true,
@@ -52,9 +62,10 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-contrib-jshint');
     grunt.loadNpmTasks('grunt-contrib-uglify');
     grunt.loadNpmTasks('grunt-contrib-watch');
+    grunt.loadNpmTasks('grunt-concat-css');
 
     // Custom tasks (local plugin)
     grunt.loadNpmTasks('grunt-aggregizer');
 
-    grunt.registerTask('default', ['aggregizer', 'uglify']);
+    grunt.registerTask('default', ['aggregizer', 'concat_css', 'uglify']);
 }
