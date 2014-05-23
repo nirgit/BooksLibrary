@@ -14,3 +14,35 @@
     float: left ;
     margin: 5px 5px 0 5px ;
 }
+
+.book-bg {
+    background-image: url("../imgs/books-bg.png");
+    background-repeat: no-repeat;
+    background-position: 50%;
+    background-size: cover;
+    width: 80%;
+    height: 80%;
+    opacity: 0.2;
+    margin: 10%;
+    position: absolute;
+}
+
+.book-title {
+    color: rgb(50, 50, 50) ;
+    font-family: cursive ;
+    font-size: 14px ;
+    font-weight: bold;
+    text-align: center;
+}
+
+.book-author {
+
+}
+
+.book-year {
+     position: absolute;
+     bottom: 5%;
+     text-align: center;
+     width: 100%;
+     font-size: 12px ;
+}
