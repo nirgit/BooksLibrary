@@ -8,7 +8,7 @@ module.exports = function(grunt) {
               // Task-specific options go here.
             },
             all: {
-              src: ["resources/**/*.css"],
+              src: ["resources/**/app.css", "resources/**/app-animations.css", "resources/**/book.css"],
               dest: "./resources/views/css/appstyles.min.css"
             },
           },
