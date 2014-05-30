@@ -18,14 +18,15 @@ public class MockDataSource {
             "Nir", "Joshua", "Jerry", "Pamela", "Dana", "Karen", "Amy", "Sasha", "Ben", "William", "Alex",
             "Ali", "Andreas", "Nadia", "Carol", "Stewart", "Carl", "Chloe", "Connor", "Julia", "Sara",
             "Michael", "Tammy", "Susan", "George", "Frank", "Estel", "Helen", "Henry", "Kimberly", "John",
-            "Martin", "Miguel"
+            "Martin", "Miguel", "Jonathan", "Alexandria"
     } ;
 
     private static String[] lastNames = {
             "Moav", "Bloch", "Kamil", "Rosenbaum", "Brown", "Smith", "Johnson", "Eliot",
             "Shakespear", "Walters", "Friedman", "Simpson", "Bradley", "Ramirez", "Baron",
             "Fox", "Fisher", "Bakers", "McDouglas", "Atkins", "Robertson", "Robinson",
-            "Gold", "Ryder", "Pitt", "Peterson", "Anderson", "Steinbeck", "Amis", "Cervantes"
+            "Gold", "Ryder", "Pitt", "Peterson", "Anderson", "Steinbeck", "Amis", "Cervantes",
+            "Sacks", "Blase"
     } ;
 
     private static String[] bookNames = {
@@ -35,7 +36,11 @@ public class MockDataSource {
             "Foundations", "Euclide Geometry", "Advanced Calculus", "jQuery 2.0",
             "Harry Potter", "The Hunger Games", "To Kill A Mockingbird", "Gone with the Wind",
             "Little Women", "Animal Farm", "Romeo and Juliet", "Lord of the Flies",
-            "The Grapes of Wrath", "Lolita", "The Information", "Don Quixote"
+            "The Grapes of Wrath", "Lolita", "The Information", "Don Quixote",
+            "Alice in Wonderland", "The search for meaning", "The truth", "The Bible",
+            "The History of Europe", "Collapse", "The Clash of Civilizations", "1984",
+            "The Book Thief", "The Messenger", "The Prisoner from Tehran", "Letters to a Buddhist Jew",
+            "Future Tense"
     } ;
 
     private List<String> authors = null ;
@@ -43,7 +48,7 @@ public class MockDataSource {
     private List<Owner> owners = null ;
 
     final int NUMBER_OF_AUTHORS = firstNames.length ;
-    final int NUMBER_OF_OWNERS  = 30 ;
+    final int NUMBER_OF_OWNERS  = 100 ;
 
     public MockDataSource() {
         this.authors    = new ArrayList<>() ;
