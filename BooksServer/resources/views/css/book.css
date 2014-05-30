@@ -2,7 +2,7 @@
     width: 100% ;
     max-height: 550px ;
     overflow-y: scroll ;
-    margin-left: -5px ;
+    margin: 0 -10px ;
 }
 
 .book {
@@ -37,6 +37,7 @@
 
 .book-author {
     font-family: cursive ;
+    text-align: center ;
 }
 
 .book-year {
